@@ -18,6 +18,7 @@
         <h1>Ejercicio 2</h1>
     </section>
     <seccion id="intervalos2">
+        <h1>Ejercicio 3</h1>
         <label for="">Hora de inicio</label>
         <input type="number" min="0" max="24" id="h1"> <input type="number" min="0" max="60" id="m1">
         <label for="">Hora de Final</label>
@@ -32,7 +33,18 @@
         <label for="">Introduce la password</label>
         <input type="text" id="input-pass">
         <button id="button-pass">Enviar</button>
-        <article id="pass-result"></article>
+        <article id="pass-result">
+            <section id="pass-msj">
+
+            </section>
+            <ul id="lista-requisitos">
+                <li id="longitud">Longitud mínima de 8 caracteres</li>
+                <li id="mayus">Contiene alguna mayúscula</li>
+                <li id="minus">Contiene alguna minúscula</li>
+                <li id="especial">Contiene alguno de los siguientes caracteres especiales @ - _ = * + $ #</li>
+                <li id="numero">Contiene algún número</li>
+            </ul>
+        </article>
     </section>
     <section id="frases">
         <h1>Ejercicio 5</h1>
@@ -43,5 +55,17 @@
     </section>
     <script src="functions.js"></script>
     <script src="app.js"></script>
+    <style> 
+        #pass-msj{
+            margin:10px 0 10px 0;
+        }
+        #lista-requisitos li{
+            list-style-type: none;
+            width: 40%;;
+            padding: 0.75rem;
+            border-bottom:1px solid black;
+            margin-bottom: 10px;
+        }
+    </style>
 </body>
 </html>

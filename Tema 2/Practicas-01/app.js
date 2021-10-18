@@ -98,15 +98,15 @@ mostrarIntervalo(hora, {
 const btnIntervalo2 = document.getElementById('btnIntervalo2');
 
 const generarHora = (hora, minutos) => {
-    return {"horas": hora, "minutos": minutos};
+    return { "horas": hora, "minutos": minutos };
 }
-function limpiarIntervaloDos(){
+function limpiarIntervaloDos() {
     let els = document.getElementById('spot-intervalo-2').childNodes;
-    for(let el of els){
+    for (let el of els) {
         el.textContent = '';
     }
 }
-function mostrarIntervalo2(){
+function mostrarIntervalo2() {
     limpiarIntervaloDos();
     let h1 = parseInt(document.getElementById('h1').value);
     let m1 = parseInt(document.getElementById('m1').value);
@@ -119,9 +119,9 @@ function mostrarIntervalo2(){
     let intervaloDos = parseInt(document.getElementById('intervaloDos').value);
 
     console.log(horaInicio, horaFinal, intervaloDos)
-    if(h2 >= h1){
-        if(m2 >= m1){
-            mostrarIntervalo(horaInicio, horaFinal, intervaloDos, 'spot-intervalo-2' );
+    if (h2 >= h1) {
+        if (m2 >= m1) {
+            mostrarIntervalo(horaInicio, horaFinal, intervaloDos, 'spot-intervalo-2');
 
         }
     }
@@ -131,25 +131,29 @@ btnIntervalo2.addEventListener('click', mostrarIntervalo2);
 /* ejercicio 4 */
 const btnPass = document.getElementById('button-pass');
 const resultPass = document.getElementById('pass-result');
+const listaError = document.getElementById('lista-error');
+const passMsj = document.getElementById('pass-msj');
 
-
-function contieneMayus(password){
+function crearLista() {
+    return document.createElement('li');
+}
+function contieneMayus(password) {
     let mayus = "QWERTYUIOPASDFGHJKLÑZXCVBNM";
     //let array = mayus.split('');
     //console.log(array);
     let contieneMayus = false;
-    password.split('').forEach(el =>{
-        if(mayus.includes(el)){
+    password.split('').forEach(el => {
+        if (mayus.includes(el)) {
             contieneMayus = true;
         }
     });
     return contieneMayus;
 }
-function contieneMinus(password){
+function contieneMinus(password) {
     let minus = ("QWERTYUIOPASDFGHJKLÑZXCVBNM").toLowerCase();
     let contieneMinus = false;
-    password.split('').forEach(el =>{
-        if(minus.includes(el)){
+    password.split('').forEach(el => {
+        if (minus.includes(el)) {
             contieneMinus = true;
         }
     });
@@ -158,54 +162,95 @@ function contieneMinus(password){
 function longitudMayorQueOcho(password) {
     return password.length >= 8;
 };
-function contieneNumero(password){
+function contieneNumero(password) {
     let numeros = "0123456789";
     let contieneNumeros = false;
-    password.split('').forEach(el =>{
-        if(numeros.includes(el)){
+    password.split('').forEach(el => {
+        if (numeros.includes(el)) {
             contieneNumeros = true;
         }
     });
     return contieneNumeros;
 }
-function contieneCaracteresEspeciales(password){
-    let caracteres = "@-_=*+$#@";
+function contieneCaracteresEspeciales(password) {
+    let caracteres = "@-_=*+$#";
     let contieneCaracteres = false;
-    password.split('').forEach(el =>{
-        if(caracteres.includes(el)){
+    password.split('').forEach(el => {
+        if (caracteres.includes(el)) {
             contieneCaracteres = true;
         }
     });
     return contieneCaracteres;
 }
-function fuerzaPassword(){
+
+
+function fuerzaPassword() {
+   
     let password = document.getElementById('input-pass').value;
     let contador = 0;
-    if(!contieneCaracteresEspeciales(password)) contador++;
-    if(!contieneMayus(password)) contador++;
-    if(!contieneMinus(password)) contador++;
-    if(!contieneNumero(password)) contador++;
-    if(!longitudMayorQueOcho(password)) contador++;
 
-    if(contador == 0){
-        resultPass.style.color = 'green';
-
-        resultPass.textContent = 'La contraseña es segura';
-    }else if(contador <= 2){
-        resultPass.style.color = 'orange';
-
-        resultPass.textContent = 'La contraseña es poco segura';
+    if (!contieneCaracteresEspeciales(password)) {
+        contador++;
+        document.getElementById('especial').style.color='red';
+        document.getElementById('especial').style.borderBottom='2px solid red';
 
     }else{
-        resultPass.style.color = 'red';
-        resultPass.textContent = 'La contraseña es débil. Te convendría pensar una contraseña más segura';
+        document.getElementById('especial').style.color='green';
+        document.getElementById('especial').style.borderBottom='2px solid green';
+    }
+
+    if (!contieneMayus(password)) {
+        contador++;
+        document.getElementById('mayus').style.color='red';
+        document.getElementById('mayus').style.borderBottom='2px solid red';
+    }else{
+        document.getElementById('mayus').style.color='green';
+        document.getElementById('mayus').style.borderBottom='2px solid green';
+    }
+    if (!contieneMinus(password)) {
+        contador++;
+        document.getElementById('minus').style.color='red';
+        document.getElementById('minus').style.borderBottom='2px solid red';
+    }else{
+        document.getElementById('minus').style.color='green';
+        document.getElementById('minus').style.borderBottom='2px solid green';
+    }
+    if (!contieneNumero(password)) {
+        contador++;
+        document.getElementById('numero').style.color='red';
+        document.getElementById('numero').style.borderBottom='2px solid red';
+    }else{
+        document.getElementById('numero').style.color='green';
+        document.getElementById('numero').style.borderBottom='2px solid green';
+    }
+    if (!longitudMayorQueOcho(password)) {
+        contador++;
+        document.getElementById('longitud').style.color='red';
+        document.getElementById('longitud').style.borderBottom='2px solid red';
+    }else{
+        document.getElementById('longitud').style.color='green';
+        document.getElementById('longitud').style.borderBottom='2px solid green';
+    }
+
+    if (contador == 0) {
+        passMsj.style.color = 'green';
+
+        passMsj.textContent = 'La contraseña es segura';
+    } else if (contador <= 2) {
+        passMsj.style.color = 'orange';
+
+        passMsj.textContent = 'La contraseña es poco segura';
+
+    } else {
+        passMsj.style.color = 'red';
+        passMsj.textContent = 'La contraseña es débil. Te convendría pensar una contraseña más segura';
 
     }
 }
 
-let a = document.getElementById('input-pass').value;
+let a = document.getElementById('input-pass');
 console.log(a);
-btnPass.addEventListener('click', fuerzaPassword); 
+a.addEventListener('keyup', fuerzaPassword);
 
 
 /* Ejercicio 5 */
@@ -217,7 +262,7 @@ const spotFrases = document.getElementById('spot-frases');
 
 function limpiarFrases() {
     let spots = spotFrases.childNodes;
-    for(let spot of spots){
+    for (let spot of spots) {
         spot.textContent = '';
     }
 }
@@ -240,7 +285,7 @@ const mostrarModificaciones = () => {
     palindrom.textContent = palindromo(str) ? 'Es palindromo' : 'No es palindromo';
     let array = [letra, palabra, mays, titul, letrasReve, palabrasReve, palindrom];
     array.forEach(el => spotFrases.append(el));
-    
+
 
 
 };
