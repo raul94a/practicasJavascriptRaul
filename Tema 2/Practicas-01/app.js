@@ -126,6 +126,7 @@ function mostrarIntervalo2() {
         }
     }
 }
+ç
 btnIntervalo2.addEventListener('click', mostrarIntervalo2);
 
 /* ejercicio 4 */
@@ -139,8 +140,7 @@ function crearLista() {
 }
 function contieneMayus(password) {
     let mayus = "QWERTYUIOPASDFGHJKLÑZXCVBNM";
-    //let array = mayus.split('');
-    //console.log(array);
+  
     let contieneMayus = false;
     password.split('').forEach(el => {
         if (mayus.includes(el)) {
