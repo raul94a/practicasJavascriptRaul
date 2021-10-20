@@ -1,8 +1,10 @@
 //ejercicio 1
+console.log('EJERCICIO 1')
 let array = new Array(3, 7, 6, 9, 2);
 let arrayJson = new Array('{','a: 3','b: 7', 'c: 6', 'd: 9', 'e: 2', '}');
 
 //ejercicio 2
+console.log('EJERCICIO 2')
 const meses = [];
 meses.push('junio');
 for(let mes of ['enero', 'febrero', 'marzo', 'abril', 'mayo'].reverse()){
@@ -14,6 +16,7 @@ for(let mes of ['julio','agosto','septiembre','octubre','noviembre','diciembre']
 console.log(meses);
 
 //ejercicio 3
+console.log('EJERCICIO 3')
 const copiaMeses = meses.slice();
 
 for(let i = 0; i < meses.length; i++){
@@ -23,6 +26,7 @@ for(let i = 0; i < meses.length; i++){
 console.log(copiaMeses);
 
 // ejercicio 4
+console.log('EJERCICIO 4')
 let listaCompra = ['Peras', 'Manzanas', 'Kiwis', 'Plátanos','Mandarinas'];
 listaCompra.splice(1,1);
 console.log(listaCompra)
@@ -32,6 +36,7 @@ listaCompra.splice(1, 1, 'Cerezas', 'Nísperos');
 console.log(listaCompra);
 
 //ejercicio 5
+console.log('EJERCICIO 5')
 function ordenar(array){
     return array.sort(function(a, b){
         return a - b;
@@ -40,6 +45,7 @@ function ordenar(array){
 console.log(ordenar([10,3,4,7,0,9,6,8,3.7]));
 
 //ejercicio 6
+console.log('EJERCICIO 6')
 function ordenarPorUltimaLetra(array){
  
     return array.sort(function(a,b){
@@ -54,6 +60,7 @@ function ordenarPorUltimaLetra(array){
 console.log(ordenarPorUltimaLetra(['hola', 'esto', 'wwwuw','abcd', 'aaa', 'zetazetaz']));
 
 //Ejercicio 7
+console.log('EJERCICIO 7')
 /* EJEMPLO DE PROGRAMACION IMPERATIVA: generación de números aleatorios */
 
 //quiero generar 5 numeros aleatorios y guardarlos en un array...
@@ -84,6 +91,7 @@ function generarListaNumerosAleatorios(longitud, rango){
 console.log(generarListaNumerosAleatorios(10, 80));
 
 //ejercicio 8
+console.log('EJERCICIO 8')
 const semana = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo'];
 
 console.log(semana.filter(el => el.startsWith('M')));
@@ -105,6 +113,7 @@ semana.forEach(e => {
 console.log('¿Se incluye el día Martes?',semana.includes('Martes') ? 'Sí': 'No');
 
 //Ejercicio 9
+console.log('EJERCICIO 9');
 let notas = generarListaNumerosAleatorios(10,10);
 //nota mas baja
 console.log(notas.sort((a, b) => a - b)[0]);
@@ -126,7 +135,7 @@ let arrayNotasSumarUnPuntoASuspensas = notas.map(e => {
 console.log(notas, arrayNotasSumarUnPuntoASuspensas);
 
 //ejercicio 10
-
+console.log('EJERCICIO 10');
 let notasRef = notas;
 let notasValor = notas.slice();
 //añadimos un elemento a notas con push
@@ -134,23 +143,27 @@ notas.push(99);
 console.log(notasRef, notasValor);
 
 //ejercicio 11
+console.log('EJERCICIO 11')
 function pruebaRestSpread(...a){
     console.log('REST')
     let media = 0;
     for(let arg of a){
+        console.log(arg);
         media += arg;
     }
     media /= a.length;
     console.log('Media',media);
     console.log('SPREAD')
-    let array = [...a];
+    let array = [...a,88999];
     array.forEach(e => console.log(e));
-
 }
-
+pruebaRestSpread(2,5,6,8,9,8,5);
 
 //Ejercicio 12
+console.log('EJERCICIO 12')
 let  [lunes, martes, miercoles, jueves, viernes,sabado, domingo] = semana;
 console.log(lunes, martes, miercoles, jueves, viernes, sabado, domingo);
 let [l, m, x, j, v, ...finde] = semana;
 console.log(l, m, x, j, v, finde);
+let [lun, ,mier, ,vier, ...find] = semana;
+console.log(lun, mier, vier, finde);
