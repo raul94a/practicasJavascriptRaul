@@ -74,8 +74,8 @@ console.log(a, b, c, d, e)
 let arrayExplicacionImperativa = [a,b,c,d,e];
 console.log(arrayExplicacionImperativa);
 
-//Ahora bien...hemos repetido la misma tarea 5 veces. Si requirieramos más numeros aleatorios, esta tarea sería muy aburrida, ardua e ineficiente...
-//para ello existe la programación funcional, es decir, que mediante funciones podemos evitar repeticiones y hacer el código más legible
+//Ahora bien...hemos repetido la misma tarea 5 veces. En realidad para esta tarea sería necesaria la utilización de bucles...
+//para ello existe la programación funcional, es decir, que mediante funciones podemos evitar bucles para llegar al mismo objetivo.
 
 function generarAleatorio(rango){return parseInt(Math.random() * rango)};
 
@@ -147,15 +147,12 @@ console.log('EJERCICIO 11')
 function pruebaRestSpread(...a){
     console.log('REST')
     let media = 0;
-    for(let arg of a){
-        console.log(arg);
-        media += arg;
-    }
-    media /= a.length;
+    let suma = a.reduce((a, b) => a + b);
+    media = suma / a.length;
     console.log('Media',media);
     console.log('SPREAD')
     let array = [...a,88999];
-    array.forEach(e => console.log(e));
+    console.log(array)
 }
 pruebaRestSpread(2,5,6,8,9,8,5);
 
