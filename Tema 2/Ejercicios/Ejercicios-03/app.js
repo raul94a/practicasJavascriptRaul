@@ -1,31 +1,31 @@
 //ejercicio 1
 let persona = new Object()
-   persona.nombre ='Jaime';
-   persona.apellido = 'lOGITECH';
-   persona.perro = true;
-   persona.getNombre = function(){
-       return persona.nombre;
-   }
-   persona.tienePerro = function(){
-       return persona.perro ? 'Si': 'No';
-   }
+persona.nombre = 'Jaime';
+persona.apellido = 'lOGITECH';
+persona.perro = true;
+persona.getNombre = function () {
+    return persona.nombre;
+}
+persona.tienePerro = function () {
+    return persona.perro ? 'Si' : 'No';
+}
 
-  
+
 
 
 let ordenador = {
     ram: 7,
     ssd: 500,
     procesador: 'IntelCore 7',
-    tieneMasDe8gbRam(){
+    tieneMasDe8gbRam() {
         return this.ram > 500 ? 'Tiene más de 8 gb RAM' : 'Tiene menos de 8 gb de RAM';
     },
-    toString(){
+    toString() {
         return `RAM: ${this.ram} gb, SSD: ${this.ssd} gb, procesador: ${this.procesador}`;
     }
 }
-    
-   
+
+
 
 
 
@@ -39,7 +39,7 @@ const tvSamsung = {
     categoria: 'Televisores',
     unidades: 4,
     precio: 345.95,
-    importe(){
+    importe() {
         return parseFloat((this.unidades * this.precio).toFixed(2)) + ' €'
     }
 }
@@ -47,43 +47,45 @@ const tvSamsung = {
 console.log(tvSamsung.importe());
 
 //Ejercicio 3
-class Productos{
-    
-    constructor(nombre, categoria, unidades, precio){
+console.log('Ejercicio 3')
+class Productos {
+
+    constructor(nombre, categoria, unidades, precio) {
         this.nombre = nombre;
         this.categoria = categoria;
         this.unidades = unidades;
         this.precio = precio;
     }
-    importe(){
+    importe() {
         return parseFloat((this.unidades * this.precio).toFixed(2)) + ' €'
     }
-    getInfo(){
+    getInfo() {
         return `Categoria: ${this.categoria}\nImporte: ${this.importe()}`
     }
-    static getCategories(){
+    static getCategories() {
         return ['Televisores', 'Telefonia', 'Consolas', 'Ropa'];
     }
-    toString(){
+    toString() {
         return `${this.categoria}--${this.nombre}`;
     }
-    valueOf(){
+    valueOf() {
         return this.unidades;
     }
 }
 
 let p1 = new Productos('Tv', 'Televisiones', 5, 200);
 let p2 = new Productos('Movil', 'Telefonia', 10, 1000);
-let p3 = new Productos('PS5', 'Consolas',1, 500);
-console.log(p1.getInfo(),p2.getInfo(),p3.getInfo())
+let p3 = new Productos('PS5', 'Consolas', 1, 500);
+console.log(p1.getInfo(), p2.getInfo(), p3.getInfo())
 
 //ej 4
-class Televisores extends Productos{
-    constructor(nombre, categoria, unidades, precio, tamanio){
-        super(nombre, categoria,unidades,precio);
+console.log('Ejercicio 4')
+class Televisores extends Productos {
+    constructor(nombre, categoria, unidades, precio, tamanio) {
+        super(nombre, categoria, unidades, precio);
         this.tamanio = tamanio;
     }
-    getInfo(){
+    getInfo() {
         return `Nombre: ${this.nombre}\nTamaño: ${this.tamanio}`;
     }
 }
@@ -91,43 +93,50 @@ class Televisores extends Productos{
 let tv = new Televisores('LG 450 Oled', 'televisonres', 5, 100, '45 pulgadas');
 console.log(tv.getInfo());
 //Ejercicio 5
+console.log('Ejercicio 5');
 console.log(Productos.getCategories());
 //Ejercicio 6
+console.log('Ejercicio 6')
 let productEj6 = new Productos('Camiseta Real Madrid', 'Ropa', 3, 500);
 console.log(productEj6.toString());
 //Ejercicio 7
-let array = [p1,p3,p2];
+console.log('Ejercicio 7')
+let array = [p1, p3, p2];
 let arrayCopia = array.slice();
 console.log('array NO ordenado', arrayCopia)
 console.log(array, array.sort())
 //Ejercicio 8
+console.log('Ejercicio 8')
 console.log(p1.valueOf() > p2.valueOf());
 //ejercicio 9
-let p5 = new Productos('Zapatillas running','Calzado deportivo',5,89);
-let arrayEj9 = [p1,p2,p3,tv,p5];
+console.log('Ejercicio 9')
+let p5 = new Productos('Zapatillas running', 'Calzado deportivo', 5, 89);
+let arrayEj9 = [p1, p2, p3, tv, p5];
 
-function prodsSortByName(array){
-    return array.sort(function(a,b){
-        if(a.nombre > b.nombre)  {
+function prodsSortByName(array) {
+    return array.sort(function (a, b) {
+        if (a.nombre > b.nombre) {
             return 1
-        } else if(a.nombre == b.nombre){
+        } else if (a.nombre === b.nombre) {
             return 0;
-        } else return -1;
+        } else if(a.nombre < b.nombre) return -1;
     });
 }
-console.log(prodsSortByName(arrayEj9));
 
-function prodsSortByPrice(array){
-    return array.sort(function(a,b){
-        if(a.precio > b.precio)return 1;
+let arrayNombre = prodsSortByName(arrayEj9);
+console.log('Nombre: ', arrayNombre);
+
+function prodsSortByPrice(array) {
+    return array.sort(function (a, b) {
+        if (a.precio > b.precio) return 1;
         else if (a.precio === b.precio) return 0;
-        else return -1;
-    });
+        else if(a.precio < b.precio) return -1;
+    }).reverse();
 }
 
-prodsSortByPrice(arrayEj9)
-
-function prodsTotalPrice(array){
+let arrayPrecio = prodsSortByPrice(arrayEj9);
+console.log('precio: ', arrayPrecio)
+function prodsTotalPrice(array) {
     let importes = []
     array.forEach(element => {
         importes.push(element.importe());
@@ -137,12 +146,12 @@ function prodsTotalPrice(array){
 
 console.log(prodsTotalPrice(arrayEj9));
 
-function prodsWithLowUnits(array, number){
+function prodsWithLowUnits(array, number) {
     return array.filter(e => e.unidades < number);
 }
 console.log(prodsWithLowUnits(arrayEj9, 6));
 
-function prodsList(array){
+function prodsList(array) {
     let str = "Listado de productos\n";
     array.forEach(e => {
         str += `- Nombre: ${e.nombre} -- Precio: ${e.precio} -- Unidades: ${e.unidades} -- Categoria: ${e.categoria}\n`;

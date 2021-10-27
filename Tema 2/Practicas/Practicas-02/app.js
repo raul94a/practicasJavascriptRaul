@@ -12,17 +12,15 @@ btnEj1.addEventListener('click', function(e){
     let array = str.split('');
     let object = {};
     array.forEach(element => {
-
         if(element !== ' '){
             if(!object[element]){
+                
                 object[element] = 1;
             }else{
                 object[element] += 1;
             }
         }
-        
     });
-
    
     for(let o in object){
         let parrafo = document.createElement('p');
