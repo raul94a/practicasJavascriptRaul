@@ -296,6 +296,7 @@ let dni = dni => {
     let resultado = parteNumerica % 23;
     //console.log(resultado);
     let letra = array[resultado];
+    console.log(`La letra correspondiente a tu numero del DNI es: ${array[resultado]}`)
     // console.log(letra);
     //console.log(dni.substring(dni.length -1))
 
