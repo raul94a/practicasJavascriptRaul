@@ -62,7 +62,9 @@ class Store{
         return this.products.filter((product) => product.units < units);
     }
     orderByUnits(){
-        return this.products.sort((a, b)=>{
+        let productos = [];
+        productos = this.products.slice();
+        return productos.sort((a, b)=>{
             if(a.units > b.units){
                 return 1
             }else if(a.units < b.units) return -1;
@@ -70,7 +72,9 @@ class Store{
         });
     }
     orderByName(){
-        return this.products.sort((a, b) => {
+        let productos = [];
+        productos = this.products.slice();
+        return productos.sort((a, b) => {
             if(a.name > b.name) return 1
             else if (a.name < b.name) return -1;
             else return 0;
@@ -102,3 +106,14 @@ console.log('ORDER BY UNITS\n')
 console.log(almacen.orderByUnits());
 console.log('UNDERSTOCK\n')
 console.log(almacen.underStock(10))
+
+// let orderUnits = (almacen) => {
+//     return almacen.orderByUnits();
+// }
+
+// let orderName = (almacen) =>{
+//     return almacen.orderByName();
+// }
+
+// console.log(orderUnits(almacen));
+// console.log(orderName(almacen));
