@@ -1,33 +1,13 @@
 //almacen
-class Product{
-    constructor(id, name, price, units = 0){
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.units = units;
-    }
-    changeUnits(units){
-        if(this.units + units < 0){
-            return false;
-        } 
-        this.units += units;
-    }
-    productImport(){
-        return this.price * this.units;
-    }
-    toString(){
-        return `${this.name} (${this.units}): ${parseFloat(this.price.toFixed(2))} €/u => ${parseFloat(this.productImport().toFixed(2))} €`;
-    }
-}
+import {Product} from './product.js';
 
 class Store{
-    products = [p,p1];
+    products = [];
     constructor(id){
         this.id = id;
     }
     findProduct(id){
         return this.products.filter((e)=>{
-           
            if(e.id === id){
                return e;
            }
@@ -35,7 +15,7 @@ class Store{
     }
     addProduct(id, nombre, precio){
         let producto = this.findProduct(id);
-        console.log(producto);
+        //console.log(producto);
         if(producto){
             return false;
         }else{
@@ -49,10 +29,13 @@ class Store{
             return p.id === id;
         });
         if(index > -1){
+            let producto = this.products[index];
+            if(producto.units > 0) return false;
             this.products.splice(index,1);
-            return true;
+            return producto;
         }
         return false;
+      
     }
     changeProductUnits(id, units){
         let producto = this.products.filter((product) => product.id === id)[0];
@@ -86,13 +69,36 @@ class Store{
             else return 0;
         });
     }
-
-    
+    orderByName(){
+        return this.products.sort((a, b) => {
+            if(a.name > b.name) return 1
+            else if (a.name < b.name) return -1;
+            else return 0;
+        }); 
+    }
 }
+//SI SE EJECUTA CON EL NODE ES MUCHO MEJOR!!!
+let almacen = new Store(1);
 
-let p = new Product(1, 'Xiaomi Redmi Note 9', 250.98, 50);
+almacen.addProduct(1, 'TV Samsumg MP45', 345.95);
+almacen.addProduct(2, 'Abaco de madera', 245.95);
+almacen.addProduct(3, 'Impresora Epson LX-455', 45.95);
+almacen.addProduct(4, 'USB Kingston 16GB', 5.95);
 
-let p1 = new Product(2, 'Xiaomi Redmi Note 9', 250.98, 10);
-let store = new Store(1);
+almacen.changeProductUnits(2, 12);
+almacen.changeProductUnits(4, 40);
+almacen.changeProductUnits(2, -9);
 
+console.log(almacen);
 
+console.log('DELETE PRODUCT 4 \n')
+console.log(almacen.delProduct(4))
+console.log('DELETE PRODUCT 1 \n')
+console.log(almacen.delProduct(1));
+
+console.log('ORDER BY NAME\n')
+console.log(almacen.orderByName());
+console.log('ORDER BY UNITS\n')
+console.log(almacen.orderByUnits());
+console.log('UNDERSTOCK\n')
+console.log(almacen.underStock(10))

@@ -1,7 +1,6 @@
-//PRACTICA 1
 
-let contadorGrupos = 1;
-let contadorAlumnos = 1;
+
+//PRACTICA 1
 let grupos = [];
 let alumnos = [];
 
@@ -12,10 +11,10 @@ let existeIdGrupo = (cod) => {
     });
     return existe;
 };
+
 let devuelveIdGrupoMayorSumandoleUno = (cod, type = 'grupos') => {
     let mayor = 0;
     if(type == 'grupos'){
-        
         grupos.forEach(element =>{
             if(element['id'] > mayor){
                 mayor = element['id'];
@@ -30,7 +29,6 @@ let devuelveIdGrupoMayorSumandoleUno = (cod, type = 'grupos') => {
         });
         return (mayor + 1);
     }
-   
 };
 let existeCodigo = (cod) => {
     let existe = false;
@@ -46,9 +44,10 @@ const obtenerGrupoById = id => {
 }
 
 let addGroup = (id, cod, nombre, grado = 'S', familia) => {
-    if(grado !== 'S'){
-        grado = 'M';
-    }
+    grados = ['S', 'M']
+    if(!grados.includes(grado)){
+       throw 'Error. el grado debe tener un valor de S o de M'
+     }
     if(cod == '' || nombre == '' || grado == '' || familia == ''){
         throw 'Error. Alguno de los datos NO es correcto. No puede haber datos vacios';
     }
@@ -166,9 +165,35 @@ let delPupil = id => {
         alert('El alumno NO ha sido borrado')
     } 
 };
+//PRUEBAS
+try{
+    addGroup(1,'DAM','Desarrollo de Aplicaciones Multiplataforma','S','Informática');
+}catch(e){
+    console.log(e);
+}
 
-addGroup(1,'GRUPO01','PUTOSAMOS','S','PROGRAMACION');
-addGroup(1,'GRUPO02','PUTOSAMOS2.0','S','PROGRAMACION');
+try{
+    addGroup(1,'SMR','Sistemas Microinformáticos y Redes','X','Informática');
+}catch(e){
+    console.log(e);
+}
+try{
+    addPupil(1,'David','David@gmail.com','', '', 1);
 
-addPupil(1,'raul','raul@albin','19942007', 'http://www.foto.es',2);
-addPupil(1,'raul', 'raul@albin', '19942007', 'http://www.foto.es', 1 );
+}catch(e){
+    console.log(e)
+}
+try{
+    addPupil(1,'Flavio','Flavio@gmail.com','20001212', '', 1);
+
+}catch(e){
+    console.log(e)
+}
+try{
+    addPupil(1,'pablo', 'pablo@albin', '', '', 3);
+
+}catch(e){
+    console.log(e)
+}
+
+
