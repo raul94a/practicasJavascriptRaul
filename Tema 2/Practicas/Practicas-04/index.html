@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="message"></div>
+    <div class="info">
+        <table id="grupos">
+            <tr>
+                <th>ID</th>
+                <th>Codigo</th>
+                <th>Nombre</th>
+                <th>Grado</th>
+                <th>Familia</th>
+            </tr>
+        </table>
+        <p id="total-grupos"></p>
+    </div>
+    
+    <div>
+        <form action="#" id="newgroup">
+            <input type="hidden" id="newgroup-id" value="1">
+            <label for="newgroup-cod">Código: </label>
+            <input type="text" id="newgroup-cod">
+            <label for="newgroup-name">Nombre: </label>
+            <input type="text" id="newgroup-name">
+            <label for="newgroup-grade">Tipo de grado: </label>
+            <div>
+                S<input type="radio" value="S" name="grado" checked="checked">
+                M<input type="radio" name="grado" value="M">
+            </div>
+           
+            <label for="newgroup-family">Familia: </label>
+            <input type="text" id="newgroup-family">
+            <div class="form-controls">
+                <button type="submit">Enviar</button>
+                <button type="reset">Limpiar</button>
+            </div>
+        </form>
+        <form action="" id="delgroup">
+            <input type="text" name="" id="delgroup-id" required>
+            <div class="form-controls">
+                <button type="submit">Enviar</button>
+                <button type="reset">Limpiar</button>
+            </div>
+        </form>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
