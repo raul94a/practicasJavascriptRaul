@@ -1,0 +1,130 @@
+.barra-lateral{
+    background: white;  /* fallback for old browsers */
+    background: linear-gradient(180deg, rgba(28,68,100,1) 30%, rgba(41,71,99,1) 100%);
+    border:none;
+    /* border-right: 1px solid rgb(0, 0, 0); */
+    /* -webkit-box-shadow: 3px 25px 15px 6px #58BBFF;  */
+    box-shadow: 3px 12px 7px 2px #b0ddfc;
+
+}
+
+.barra-superior{
+    background: #2980B9;  /* fallback for old browsers */
+/* background: linear-gradient(to left, rgb(41, 71, 99), #c7ecfa, rgb(41, 71, 99)); W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+background: linear-gradient(90deg, rgba(28,68,100,1) 30%, rgba(41,71,99,1) 100%);
+border:none;
+/* border-bottom: 1px solid rgb(171, 224, 255); */
+/* -webkit-box-shadow: 1px 7px 10px 1px #58BBFF;  */
+/* box-shadow: 1px 7px 10px 1px #b0ddfc; */
+
+}
+
+.error{
+    color:red;
+}
+
+.barra-superior h1{
+ color: rgb(230, 250, 247);
+
+}
+p,i{
+    color:white;
+   transition: 400ms ease-in-out;
+}
+
+.icon-control:hover i{
+    color:orange;
+    font-size: 1.8rem;
+    
+}
+.icon-control:hover p{
+    font-size: 1.2rem;
+}
+
+.formularios .control-form{
+    background: rgba(28,68,100,1);
+}
+.formularios .control-form label{
+    color:white;
+    font-size: 1.3rem;
+}
+.formularios .control-form h1{
+    margin: 0;
+    color: white;
+}
+.formularios .control-form input{
+    padding: 0.85rem;
+    
+}
+.formularios .control-form input:focus{
+    outline: none;
+    border: 3px solid orange;
+}
+
+.formularios .control-form form .form-controls{
+    margin-top: 5vh;
+}
+
+button[type="submit"] {
+	box-shadow:inset 0px 21px 7px 0px #2b83ff;
+	background:linear-gradient(to bottom, #17297d 5%, #0f64ba 100%);
+	background-color:#17297d;
+	border-radius:8px;
+	border:1px solid #0b0e07;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	padding:14px 40px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #263666;
+}
+button[type="submit"]:hover {
+	background:linear-gradient(to bottom, #0f64ba 5%, #17297d 100%);
+	background-color:#0f64ba;
+}
+button[type="submit"]:active {
+	position:relative;
+	top:1px;
+}
+button[type="reset"]{
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.4rem;
+}
+button[type="reset"]:hover{
+    color:orange;
+    font-weight: 400;
+    cursor: pointer;
+}
+.form-controls{
+    width: 25vw;
+    justify-content: space-evenly;
+}
+.btnCerrar {
+	background:linear-gradient(to bottom, #d0451b 50%, #bc3315 100%);
+	background-color:#d0451b;
+    position: relative;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Georgia;
+	font-size:23px;
+	padding:12px 40px;
+	text-decoration:none;
+    bottom:8.3vh;
+    right: 4.1vw;
+}
+.btnCerrar:hover {
+	background:linear-gradient(to bottom, #bc3315 5%, #d0451b 100%);
+	background-color:#bc3315;
+}
+.controladores-tabla form button{
+    font-size:15px;
+	padding:7px 20px;
+}
+.controladores-tabla form input[type="number"]{
+    width: 10%;
+}
