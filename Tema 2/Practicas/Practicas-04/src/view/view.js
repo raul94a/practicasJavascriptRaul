@@ -57,6 +57,7 @@ class View{
         messageContainer.innerHTML = '';
         //colorear error
         if(error) messageContainer.classList.add('error');
+        else messageContainer.classList.remove('error');
         messageContainer.textContent = message;
 
     }

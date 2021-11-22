@@ -1,0 +1,110 @@
+.container{
+    margin: 0 auto;
+    width: 60vh;
+    background-color: rgb(255, 255, 255);
+    height: 60vh;
+    border-radius: 50%;
+    border: 2px solid black;
+    position: absolute;
+  
+background: linear-gradient(to bottom, #E2E2E2, #C9D6FF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+
+}
+
+.manecilla{
+    width: 30%;
+    margin: 0 auto;
+    margin-top:15%;
+    border:2px solid red;
+    background-color: red;
+    transform-origin: left;
+    transform: rotate(-90deg);
+    
+    
+}
+.segundo{
+    position: relative;
+    bottom: -28%;
+    left: 18%;
+}
+.min {
+    width: 25%;
+    background-color: black;
+    border: 2px solid black;
+    position: relative;
+    bottom: -12%;
+    left: 15%;
+   
+    
+}
+
+.hora{
+    width: 20%;
+    background-color: green;
+    border: 2px solid green;
+    position: relative;
+    bottom: 4%;
+    left: 12.5%;
+}
+
+.container > span {
+    width: 100%;;
+    position: relative;
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+.l{
+    top: 2%;
+    left: 8%;
+}
+.a{
+    top: 10%;
+    left: 70%;
+}
+
+.b{
+    top: 25%;
+    left: 83%; 
+}
+
+.c{
+    top: 43%;
+    left: 85%; 
+}
+
+.d{
+    top:62%;
+    left: 78%; 
+}
+
+.e{
+    top: 80%;
+    left: 62%; 
+}
+
+.f{
+    top: 90%;
+    left: 35%; 
+}
+
+.g{
+    top: 85%;
+    left: 8%;  
+}
+.h{
+    top: 69%;
+    left: -10%;  
+}
+.i{
+    top: 47%;
+    left: -22%;   
+}
+.j{
+    top: 24%;
+    left: -18%; 
+}
+.k{
+    top: 10%;
+    left: -10%; 
+}

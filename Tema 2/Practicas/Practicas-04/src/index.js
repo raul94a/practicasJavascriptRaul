@@ -1,15 +1,16 @@
 import {Controller} from './controller/Controller.js';
 import { Product } from './model/product.js';
 const $ = (selector) => document.querySelector(selector);
+const $$ = (id) => document.getElementById(id);
 
-const barraLateral = document.querySelector('.barra-lateral');
-const backdrop = document.querySelector('.backdrop');
-const formularios = document.querySelector('.formularios')
-const enviarAddNewProduct = document.querySelector('.formularios .newproduct .form-controls button[type="submit"]');
-const enviarDelProduct = document.querySelector('.formularios .delproduct .form-controls button[type="submit"]')
-const enviarStockProduct = document.querySelector('.formularios .stockproduct .form-controls button[type="submit"]');
-const enviarOrdenacionTabla = document.querySelector(/*'#form-ordenar button'*/'#control-ordenacion');
-const enviarMostrarPorUnidades = document.querySelector(/*'#form-mostrar-unidades button[type="submit"]'*/ '#mostrar-por-unidades');
+const barraLateral = $('.barra-lateral');
+const backdrop = $('.backdrop');
+const formularios = $('.formularios')
+const enviarAddNewProduct = $('.formularios .newproduct .form-controls button[type="submit"]');
+const enviarDelProduct = $('.formularios .delproduct .form-controls button[type="submit"]')
+const enviarStockProduct = $('.formularios .stockproduct .form-controls button[type="submit"]');
+const enviarOrdenacionTabla = $(/*'#form-ordenar button'*/'#control-ordenacion');
+const enviarMostrarPorUnidades = $(/*'#form-mostrar-unidades button[type="submit"]'*/ '#mostrar-por-unidades');
 
 const messageContainer = $('.warning-message p');
 
@@ -53,12 +54,14 @@ const addNewProductHandler = (e) => {
     
     const nombre = document.getElementById('newproduct-nombre');
     const precio = document.getElementById('newproduct-precio');
-    const nombreVal = nombre.value
-    const precioVal = precio.value
+    const nombreVal = nombre.value;
+    const precioVal = precio.value;
+
     if(nombreVal == '' || precioVal == ''){
         Controller.view.renderMessage("Error. Alguno de los campos está vacío", true);
         return;
     }
+    
     const product = Controller.addProductToStore({"nombre": nombreVal, "precio": parseFloat(precioVal)});
     toggleFormAndBackDrop(document.querySelector('.formularios .newproduct').parentElement);
   
