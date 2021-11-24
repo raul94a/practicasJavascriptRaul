@@ -1,8 +1,9 @@
 const $ = selector => document.querySelector(selector);
-
+const $$ = selector => document.querySelectorAll(selector);
 
 window.addEventListener("load", function (event) {
     console.log("Hola desde el evento de load");
+    
 });
 
 window.onunload = (event) => {
@@ -45,17 +46,75 @@ divEj4.addEventListener('mouseleave', e => {
 //4
 
 //5
-$('body').addEventListener('keypress', e =>{
-    console.log(e)
-    console.log(e.key, e.charCode)
-})
+// $('body').addEventListener('keypress', e =>{
+//     console.log(e)
+//     console.log(e.key, e.charCode)
+// })
 
 //6
+const ej6 = $('.ej6');
+const dimensiones = ej6.getBoundingClientRect();
+console.log(dimensiones);
+let y = dimensiones.y;
+let x = dimensiones.x;
+$('.ej6').addEventListener('keydown', function(event){
+  
+    if(event.key === 'w'){
+        y -= 10;
+        //this.style.top = `${top}px`
+        ej6.style.top = `${y}px`;
+    }
+    else if(event.key === 's'){
+        y += 10;
+        ej6.style.top = `${y}px`;
+    }
+    else if(event.key === 'd'){
+        x += 10;
+        ej6.style.left = `${x}px`;
+    }
+    else if(event.key === 'a'){
+        x -= 10;
+        ej6.style.left = `${x}px`;
+    }
+});
+
 
 //7
-
+$('.ej7 input').addEventListener('change', function(e){
+    this.nextElementSibling.textContent =   this.getAttribute('maxlength') - (this.value.length) + ' caracteres restantes';
+})
 //8
+$('.ej8').addEventListener('mouseover', function(e){
+    const showParrafos = ()=>{
+        let parrafos = Array.from($$('.ej8 p'));
+        parrafos.forEach(p => {
+            p.style.display = 'block'
+            p.style.color = 'black';
+        });
+    }
+ let target = e.target;
+ 
+ if(target.tagName === 'P'){
+    target.style.color = 'red';
+    target.addEventListener('mouseleave', () => target.style.display = 'none' );
+} else if(target.tagName === 'BUTTON'){
+    target.addEventListener('click', showParrafos);
+}
+});
+
 
 //9
 
+let popup = window.open('', '', 'height=200,width=150');
+// popup.style.position = 'absolute';
+
+popup.addEventListener('mouseover', function(e){
+    console.log(window, e)
+    let cambioDireccion = e.screenX > 500
+    console.log(cambioDireccion)
+    popup.moveBy(cambioDireccion ? e.offsetX - 400 : e.offsetX + 400, e.clientY + 100)
+})
+
+
 //10
+///NO lo voy a hacer (otra vez)
