@@ -113,7 +113,7 @@ popup.addEventListener('mouseover', function(e){
     let cambioDireccion = e.screenX > 500
     console.log(cambioDireccion)
     popup.moveBy(cambioDireccion ? e.offsetX - 400 : e.offsetX + 400, e.clientY + 100)
-})
+});
 
 
 //10
