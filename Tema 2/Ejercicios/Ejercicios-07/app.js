@@ -68,7 +68,7 @@ const calcularDias = () => {
     let diferenciaActual2021 = date - enero2021;
     let diferenciaActual2000 = date- enero2000;
 
-    console.log('Dias transcurridos desde 1/1/2000: ' + Math.round(diferenciaActual2000 / (3600 *1000 * 24)) + ' dias');
+    console.log('Dias transcurridos desde 1/1/2000: ' + Math.round(diferenciaActual2000 / (3600 * 1000 * 24)) + ' dias');
     console.log('Dias transcurridos desde 1/1/2000: ' + Math.round(diferenciaActual2021 / (3600 *1000 * 24)) + ' dias');
 
 }
