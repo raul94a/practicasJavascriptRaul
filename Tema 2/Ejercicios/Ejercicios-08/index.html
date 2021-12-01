@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <form id="registro" method="POST" action="verForm.php">
+        <label for="reg-nombre">Nombre:</label>
+        <input id="reg-nombre" name="reg-nombre" type="text" required maxlength="80" minlength="15">
+        <span id="err-nombre"></span><br />
+        <label for="reg-email">Email:</label>
+        <input id="reg-email" name="reg-email" type="email" required>
+        <span id="err-email"></span><br />
+        <label for="reg-sexo">Sexo:</label>
+        <div>
+            <input type="radio" name="reg-sexo" value="hombre" required />Hombre
+            <input type="radio" name="reg-sexo" value="mujer" required />Mujer
+            <span id="err-sexo"></span><br />
+
+        </div>
+        ...
+        <label for="reg-fechaNac">Fecha de nacimiento:</label>
+        <input type="date" name="nacimiento" id="reg-fechaNac" max="2003-01-01">
+        <label for="reg-codigo-postal">Código Postal</label>
+        <input type="text" name="codigopostal" id="reg-codigo-postal" pattern="[0-9]{5}">
+        <label for="reg-ciclo">Ciclo</label>
+        <select name="ciclo" id="reg-ciclo">
+            <option value="dam">DAM</option>
+            <option value="daw">DAW</option>
+            <option value="asir">ASIR</option>
+        </select>
+        <label for="reg-frameworks">Frameworks</label>
+
+        <div>
+            <input type="checkbox">NodeJS</input>
+            <input type="checkbox">ReactJS</input>
+            <input type="checkbox">VueJS</input>
+            <input type="checkbox">Svelte</input>
+            <input type="checkbox">Flutter</input>
+            <input type="checkbox">Laravel</input>
+
+        </div>
+
+
+        <input id="reg-acept" name="reg-acept" type="checkbox">
+        <label for="reg-acept">Acepto las condiciones</label>
+        <span id="err-acept"></span><br />
+        <div>
+            <input value="Enviar" type="submit">
+            <input value="Reset" type="reset">
+
+        </div>
+    </form>
+    <script src="app.js"></script>
+</body>
+
+</html>

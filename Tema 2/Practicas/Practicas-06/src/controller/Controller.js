@@ -1,6 +1,7 @@
 import { Product } from '../model/product.js';
 import {Store, almacen} from '../model/Store.js';
 import {View} from '../view/view.js';
+
 export class Controller{
     static store = almacen;
     static view = new View();
@@ -76,8 +77,17 @@ export class Controller{
        this.view.renderMessage('Error. El identificador introducido no existe o se han intentado retirar más unidades de las disponibles.', true);
         //necesitamos renderizar los resultados!
     }
-    static changeProductInStore(dataProductObject){
-
+    //se le pasa los datos al producto y la fila donde se encuentra para que sea modificada
+    static changeProductInStore(dataProductObject, tr){
+        //modificar el producto en nuestro almacén
+        let producto = this.store.findProduct(parseInt(dataProductObject['id']));
+        producto.name = dataProductObject['name'];
+        producto.price = dataProductObject['price'];
+        
+        //modificar la tabla en el DOM
+        this.view.renderModifyProduct(producto, tr);
+        
+        
     }
 }
 

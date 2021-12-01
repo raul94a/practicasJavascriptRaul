@@ -53,8 +53,11 @@ align-items: center;
 .actions i:first-child{
     color:darkblue;
 }
-.actions i:last-child{
+.actions i:nth-child(2){
     color:rgb(6, 7, 6)
+}
+.actions i:last-child{
+    color:green
 }
 
 i:hover{

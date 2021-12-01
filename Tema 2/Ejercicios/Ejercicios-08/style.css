@@ -1,0 +1,46 @@
+body{
+    
+    position: absolute;
+    top: 20vh;
+    right: 45vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-height: 50%;
+  
+}
+
+label{
+    text-align: center;
+
+}
+input{
+    margin-top: 5%;
+    border:none;
+  
+    border-bottom: 1px solid black;
+}
+input:focus{
+    outline: none;
+background-color: rgb(191, 250, 247);
+border-radius: 10px;
+}
+div{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+   
+    align-content: center;
+    
+}
+
+form{
+    border: 1px solid black;
+    border-radius: 20px;
+    padding: 4rem;;
+}
+
+#registro{
+    display: flex;
+    flex-direction: column;
+}

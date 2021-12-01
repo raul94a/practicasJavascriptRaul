@@ -1,4 +1,3 @@
-import {Product} from '../model/Product.js';
 class View{
     tbody = document.querySelector('tbody');
     createTr(){
@@ -23,6 +22,10 @@ class View{
 
         icon = document.createElement('i');
         icon.classList.add('far', 'fa-trash-alt');
+        actions.append(icon);
+
+        icon = document.createElement('i');
+        icon.classList.add("fas", "fa-dice-d6");
         actions.append(icon);
 
         icons.append(actions);
@@ -74,6 +77,7 @@ class View{
     }
 
     renderMessage(message, error){
+        
         let messageContainer = document.querySelector('.warning-container p');
         // borrar contenido anterior
         messageContainer.innerHTML = '';
@@ -82,6 +86,13 @@ class View{
         else messageContainer.classList.remove('error');
         messageContainer.textContent = message;
 
+    }
+    renderModifyProduct(product, tr){
+        let children = tr.children;
+        
+        children[1].textContent = product.name;
+        children[2].textContent = product.price.toFixed(2) + ' €';
+        children[4].textContent = product.productImport().toFixed(2) + ' €'
     }
 }
 

@@ -1,5 +1,5 @@
 import { Controller } from './controller/Controller.js';
-import { Product } from './model/product.js';
+
 const $ = (selector) => document.querySelector(selector);
 const $$ = (id) => document.getElementById(id);
 
@@ -20,7 +20,9 @@ tbody.addEventListener('click', function (e) {
     const classList = target.classList
     if (classList.contains('fa-plus-circle') ||
         classList.contains('fa-minus') ||
-        classList.contains('fa-trash-alt')) {
+        classList.contains('fa-trash-alt') ||
+        classList.contains('fa-dice-d6')
+        ) {
         //Si es alguno de los botonos...
         let id = target.closest('tr').getAttribute('data-id');
         let leftUnits = almacen.findProduct(parseInt(id)).units;
@@ -40,6 +42,38 @@ tbody.addEventListener('click', function (e) {
         }
         else if (classList.contains('fa-trash-alt')) {
             Controller.deleteProductFromStore(parseInt(id));
+        }
+        else if(classList.contains('fa-dice-d6')){
+            //SELECCIONAMOS LA FILA
+            const tr = target.closest('tr');
+
+            //OBTENEMOS EL ID
+            let id = tr.getAttribute('data-id');
+            //SELECCIONAMOS EL FORM
+            let formModificar = $('#form-modificar');
+            //SELEFCCIOAMOS EL BOTON DE CERRAR DEL FORMULARIO
+            let cerrar = formModificar.querySelector('button');
+           //OCULTAMOS EL FONDO
+            toggleFormAndBackDrop(formModificar);
+            //gestionar el click del form
+            let form = formModificar.querySelector('form');
+            
+            //SELECCIONAMOS EL BOTON DE ENVIAR!!!!!! 
+            form.querySelector('button[type="submit"]').addEventListener('click', function(e){
+                e.preventDefault();
+                let nombreElement = $('#modificar-nombre');
+                let precioElement = $('#modificar-precio');
+
+                //si hay datos
+                if(nombreElement.value && precioElement.value){
+                    //llamamos a controlador para cambiar las unidades
+                    const dataProductObject = {"id": id, "name": nombreElement.value, "price": parseFloat(precioElement.value)};
+                    Controller.changeProductInStore(dataProductObject, tr);
+                    cerrar.click();
+                }
+            })
+
+           
         }
         //   console.log(this.closest())
     }
@@ -164,10 +198,11 @@ const filterByUnits = (e) => {
 }
 
 
+
 const almacen = Controller.store;
+
 for (let p of almacen.products) {
     Controller.view.renderNewProduct(p);
-
 }
 
 barraLateral.addEventListener('click', iconFormTriggerHandler);
