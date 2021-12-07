@@ -13,6 +13,10 @@ export class View {
 
     createButton() { return document.createElement('button') }
 
+    createH1() { return document.createElement('h1') }
+    createH2() { return document.createElement('h2') }
+    createH3() { return document.createElement('h3') }
+
     toggleBackdrop() {
         let backdrop = this.$('.backdrop');
         console.log(backdrop)
@@ -24,7 +28,57 @@ export class View {
         extraCardInfo.classList.toggle('ocultar')
     }
 
+    createStar(firstClass = 'far', secondClass) {
+        let star = document.createElement('i');
+        star.classList.add(firstClass, secondClass);
+        return star;
+
+    }
+
+
+
+    createAverageRatingStars(stars = 0, ratingsCount = 0) {
+        // <i class="far fa-star"></i>
+        // <i class="fas fa-star"></i>
+        // <i class="fas fa-star-half-alt"></i>
+        let div = this.createDiv();
+        div.classList.add('average-rating-stars');
+        let parteEntera = parseInt(stars);
+        for (let i = 0; i < parteEntera; i++) {
+            div.append(this.createStar('fas', 'fa-star'))
+        }
+        //media estrella
+        let parteDecimal = (stars - parteEntera)
+        let parteDecimalSplit = parteDecimal.toString().split('.')
+
+        if (parteDecimalSplit.length > 1) {
+            let pd = parseFloat(parteDecimal[1]);
+            console.log(pd)
+
+            div.append(this.createStar('fas', 'fa-star-half-alt'))
+
+        }
+
+        let resto = parseInt(parteDecimal) == 0
+            ? stars == 5
+                ? 0
+                : 5 - parseInt(stars)
+            : 5 - parseInt(stars)
+        if (stars >= 4.5) {
+            resto = 0;
+        }
+        for (let i = 0; i < resto; i++) {
+            div.append(this.createStar('far', 'fa-star'))
+        }
+        let p = this.createParagraph();
+        p.textContent = `(${ratingsCount})`;
+        p.style.display = 'inline-block'
+        div.append(p)
+        return div;
+    }
+
     createBookCard(book) {
+        console.log(book)
         let volumeInfo = book.volumeInfo;
         let bookTitle = volumeInfo.title;
         let imageLinks = volumeInfo.imageLinks;
@@ -59,8 +113,8 @@ export class View {
     }
 
     createExtraBookCard(book, isSearched = true) {
+        // console.log(book)
         let extraCard = this.createDiv();
-
         let volumeInfo = book.volumeInfo;
         let bookTitle = volumeInfo.title;
         let imageLinks = volumeInfo.imageLinks;
@@ -68,38 +122,76 @@ export class View {
         let bookAuthor = volumeInfo.authors;
         let bookDescription = volumeInfo.description ? volumeInfo.description : 'Descripción no disponible';
         let img = this.createImg();
-        let title = this.createParagraph();
-        let author = this.createParagraph();
-        let category = this.createParagraph()
+        let title = this.createH1();
+        let author = this.createH2();
+        let category = this.createParagraph();
+        let pageCount = this.createParagraph();
+        let publishedDate = this.createParagraph();
+        let rating = this.createParagraph();
         extraCard.classList.add('extra-info-card', 'ocultar');
         let description = this.createParagraph();
+        let headerExtraCard = this.createDiv();
+        headerExtraCard.classList.add('header-extra-card');
+        let leftSectionHeaderExtraCard = this.createDiv();
+        leftSectionHeaderExtraCard.classList.add('left-header-extra-card');
+        let rightSectionHeaderExtraCard = this.createDiv();
+        rightSectionHeaderExtraCard.classList.add('right-header-extra-card');
+        rating = volumeInfo.averageRating ? volumeInfo.averageRating : 'Valoración no disponible'
+        pageCount.textContent = volumeInfo.pageCount ? 'Numero de paginas: ' + volumeInfo.pageCount : 'Numero de paginas no disponible';
         category.textContent = bookCategory;
+        publishedDate.textContent = volumeInfo.publishedDate ? 'Fecha de publicación: ' + volumeInfo.publishedDate : 'Fecha de publicación no disponible';
         description.textContent = bookDescription;
         title.textContent = bookTitle;
         author.textContent = bookAuthor;
+        img.setAttribute('src', `${imageLinks ? imageLinks.smallThumbnail : 'https://food-rating.com/static/img/image-not-available.png'}`);
+        leftSectionHeaderExtraCard.append(img);
+        leftSectionHeaderExtraCard.append(publishedDate);
+        
+        let bookInfoLeftSectionHeaderExtraCard = this.createDiv();
+        let ratingStars = this.createAverageRatingStars(parseFloat(volumeInfo.averageRating ? rating : 0), volumeInfo.ratingsCount ? volumeInfo.ratingsCount : 0);
+        bookInfoLeftSectionHeaderExtraCard.classList.add('extra-card-book-info');
+        let bookInfoTitle = this.createH3();
+        bookInfoTitle.textContent = 'Información general';
+        bookInfoLeftSectionHeaderExtraCard.append(bookInfoTitle);
+        bookInfoLeftSectionHeaderExtraCard.append(category);
+        bookInfoLeftSectionHeaderExtraCard.append(pageCount);
+        bookInfoLeftSectionHeaderExtraCard.append(ratingStars);
+        // leftSectionHeaderExtraCard.append(bookInfoLeftSectionHeaderExtraCard);
+        // leftSectionHeaderExtraCard.append(pageCount);
+        rightSectionHeaderExtraCard.append(title);
+        rightSectionHeaderExtraCard.append(author);
+        // rightSectionHeaderExtraCard.append(bookInfoTitle);
+        rightSectionHeaderExtraCard.append(bookInfoLeftSectionHeaderExtraCard);
+        headerExtraCard.append(leftSectionHeaderExtraCard);
+        headerExtraCard.append(rightSectionHeaderExtraCard);
+        extraCard.append(headerExtraCard);
+        // extraCard.append(bookInfoTitle)
+        // extraCard.append(bookInfoLeftSectionHeaderExtraCard)
         //AÑADIR CLASE DE STYLE DE BOTON
-        extraCard.append(title);
-        extraCard.append(author);
-        extraCard.append(category);
+        // extraCard.append(this.createAverageRatingStars(parseFloat(volumeInfo.averageRating ? rating : 0)));
+        let descriptionTitle = this.createH1();
+        descriptionTitle.textContent = 'Descripción'
+        descriptionTitle.id = 'extra-card-description'
+        extraCard.append(descriptionTitle);
         extraCard.append(description);
         //
-        if(isSearched){
+        if (isSearched) {
             let btnAddToList = this.createButton();
             btnAddToList.textContent = "Añadir a pendientes";
             btnAddToList.setAttribute('data-selfLink', book.selfLink);
             btnAddToList.classList.add('btn-firebase')
             extraCard.append(btnAddToList);
-        }else{ //Información mostrada cuando YA lo tenemos en PENDIENTE o en LEIDO
+        } else { //Información mostrada cuando YA lo tenemos en PENDIENTE o en LEIDO
             //se captura la propiedad read
             let read = book.read;
             //si el libro no está leido...
-            if(!read){
+            if (!read) {
                 let btnRead = this.createButton();
                 btnRead.textContent = 'He leído el libro';
                 btnRead.setAttribute('data-firebase', book.firebaseId);
                 btnRead.classList.add('btnReadBook');
                 extraCard.append(btnRead)
-            }else{
+            } else {
                 let btnRead = this.createButton();
                 btnRead.textContent = 'Eliminar de libros leídos';
                 btnRead.setAttribute('data-firebase', book.firebaseId);
@@ -107,6 +199,19 @@ export class View {
                 extraCard.append(btnRead)
             }
         }
+
+        let btnRead = document.createElement('a');
+        btnRead.setAttribute('href', book.accessInfo.webReaderLink);
+        btnRead.setAttribute('target', '__blank')
+        btnRead.classList.add('btn-read')
+        btnRead.textContent = 'Leer ONLINE'
+        extraCard.append(btnRead);
+
+        // let btnPdf = document.createElement('a');
+        // btnPdf.setAttribute('href', book.accessInfo.pdf.acsTokenLink);
+        // btnPdf.setAttribute('target', '__blank')
+        // btnPdf.textContent = 'Leer ONLINE'
+        // extraCard.append(btnPdf)
 
 
         return extraCard;
@@ -143,7 +248,7 @@ export class View {
             let category = this.createParagraph()
             let extraCard = this.createDiv();
             let description = this.createParagraph();
-           
+
             if (!imageLinks) {
                 defaultImage = 'https://food-rating.com/static/img/image-not-available.png';
             }
@@ -187,15 +292,21 @@ export class View {
             searchContainer.append(bookCardContainer);
         }
     }
+
+
     renderBooks(booksFromGoogle, isSearched = true, isRead = false) {
-        let searchContainer = isSearched 
-        ? this.$('.contenedor-busqueda')
-        : isRead 
-            ? this.$('.contenedor-leidos-render')
-            : this.$('.contenedor-pendientes-render') 
-        
+        let searchContainer = isSearched
+            ? this.$('.contenedor-busqueda')
+            : isRead
+                ? this.$('.contenedor-leidos-render')
+                : this.$('.contenedor-pendientes-render')
+
+
         // this.$('.contenedor-busqueda');
-        //searchContainer.textContent = '';
+        // searchContainer.textContent = '';
+        if (isSearched) {
+            searchContainer.textContent = '';
+        }
         for (let book of booksFromGoogle) {
             let bookCardContainer = this.createBookCard(book);
             let extraCard = this.createExtraBookCard(book, isSearched);
@@ -204,7 +315,7 @@ export class View {
         }
     }
     renderStoredBook(bookFromGoogle, read = false) {
-        let pendientes = this.$(`${!read ? ".contenedor-pendientes-render" : ".contenedor-leidos-render" }`);
+        let pendientes = this.$(`${!read ? ".contenedor-pendientes-render" : ".contenedor-leidos-render"}`);
         let bookCardContainer = this.createBookCard(bookFromGoogle);
         let extraCard = this.createExtraBookCard(bookFromGoogle, false);
         bookCardContainer.append(extraCard);

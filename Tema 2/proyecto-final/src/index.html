@@ -3,27 +3,18 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta http-equiv="content-type" content="text/html">
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- <link rel="stylesheet" href="assets/styles/header.css"> -->
   <link rel="stylesheet" href="assets/styles/nav.css">
   <link rel="stylesheet" href="assets/styles/main.css">
-  <!-- <script type="text/javascript" src="https://www.google.com/books/jsapi.js"></script>
-    <script type="text/javascript">
-      google.books.load();
-
-      function initialize() {
-        var viewer = new google.books.DefaultViewer(document.getElementById('viewerCanvas'));
-        viewer.load('ISBN:8417347151');
-      }
-
-      google.books.setOnLoadCallback(initialize);
-    </script> -->
+  <script src="https://kit.fontawesome.com/c71cba29f7.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://www.google.com/books/jsapi.js"></script>
   <title>Document</title>
 </head>
 
 <body>
-  <!-- <div id="viewerCanvas" style="width: 750px; height: 700px"></div> -->
 
   <!-- ELEMENTOS ESTÁTICOS -->
   <header>
@@ -39,6 +30,10 @@
   </header>
   <!-- FIN ELEMENTOS ESTÁTICOS -->
   <section class="contenedor-principal">
+    <!-- <div class="container-canvas">
+      <div id="viewerCanvas" style="width: 750px; height: 500px"></div>
+
+    </div> -->
     <div class="backdrop ocultar"></div>
     <div class="busqueda">
       <h1>BÚSQUEDA DE LIBROS</h1>
@@ -58,8 +53,62 @@
       <div class="contenedor-leidos-render"></div>
     </div>
   </section>
+  <section>
+    <button data-isbn="9788490691779" id='btn1'>CAMINO</button>
+    <button id="btn2" data-isbn="9780061724350">PRINCIPE</button>
+  </section>
 
   <script src="./assets/js/index.js" type="module"></script>
+  <!-- <script id="viewer" type="text/javascript" data-isbn = ''>
+    // let isbn = ''
+    const f = (isbn) => {}
+    google.books.load();
+    function initialize(isbn) {
+      var viewer = new google.books.DefaultViewer(document.getElementById('viewerCanvas'));
+      viewer.load(`ISBN:${isbn}`);
+
+    }
+
+    google.books.setOnLoadCallback(initialize);
+
+
+
+    let camino = document.getElementById('btn1');
+    let principe = document.getElementById('btn2');
+    camino.addEventListener('click', function () {
+      isbn = camino.getAttribute('data-isbn');
+
+    })
+    principe.addEventListener('click', function () {
+      let isbn = principe.getAttribute('data-isbn');
+      let script = document.createElement('script');
+      script.setAttribute('type', 'text/javascript')
+      script.textContent = `
+        let isbn = ${isbn};
+        google.books.load();
+
+        function initialize(){
+          var viewer = new google.books.DefaultViewer(document.getElmenetById('viewerCanvas'));
+          console.log(viewer)
+          viewer.load('ISBN:${isbn}');
+        }
+        google.books.setOnLoadCallback(initialize);
+      `;
+      let body = document.querySelector('body')
+      body.append(script)
+    })
+
+
+
+
+    /**
+     * 9788490691779
+     * 9780061724350
+     *
+     *
+     * */
+
+  </script> -->
 </body>
 
 </html>

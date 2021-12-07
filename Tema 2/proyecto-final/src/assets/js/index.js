@@ -1,9 +1,19 @@
 import { Controller } from "../../controller/Controller.js";
 
+/**
+ * TODO 
+ * 1. Pinta la información correctamente dentro de los extraCardInfo
+ *  Búsqueda => FECHA DE PUBLICACIÓN, MINIATURA (METER EN DIV Y FLOATEARLO A LA DERECHA)
+ * 
+ * 2. BOTONES DE OPCIONES DE LECTURA Y DESCARGA EN EL CASO DE QUE ESTÉ DISPONIBLE
+ * 
+ * 3. ¿MODAL DE RATING DE LIBRO?
+ * 
+ */
 
 let controlador = new Controller();
 //cargamos los datos!
-await controlador.init()
+// await controlador.init()
 
 
 const $ = selector => document.querySelector(selector);
@@ -12,7 +22,6 @@ const searchButton = $('#btnBuscar');
 const searchInput = $('#input-busqueda');
 const searchContainer = $('.contenedor-principal');
 const backdrop = $('.backdrop');
-
 const nav = $('nav');
 
 const selectContainer = (target) => {
@@ -24,28 +33,20 @@ const selectContainer = (target) => {
     Si está activo y hemos pinchado en el lo dejamos como está...
     Si esta´inactivo y hemos pinchado sobre él tenemos que buscar el activo y apagarlo. Encender el pinchado
     */
-
-//    console.log(target)
-//para saber a donde dirigirnos en el caso de pulsar un boton
-   const map = {"leidos":"contenedor-leidos", "pendientes": "contenedor-pendientes", "busqueda": "busqueda"};
-   //seleccionamos la classList del elemento que NO está oculto...
-   let activeClass = array.filter(el => !el.classList.contains('ocultar'))[0].classList[0]
-   const element = array.filter(el => el.classList.contains(map[target.id]))[0]
-   console.log(element)
-    if(element.classList.contains('ocultar')){
-        let selectedElement = $('.'+map[target.id])
-        // console.log(active);
+    //para saber a donde dirigirnos en el caso de pulsar un boton
+    const map = { "leidos": "contenedor-leidos", "pendientes": "contenedor-pendientes", "busqueda": "busqueda" };
+    //seleccionamos la classList del elemento que NO está oculto...
+    let activeClass = array.filter(el => !el.classList.contains('ocultar'))[0].classList[0]
+    const element = array.filter(el => el.classList.contains(map[target.id]))[0]
+    if (element.classList.contains('ocultar')) {
+        let selectedElement = $('.' + map[target.id])
         selectedElement.classList.toggle('ocultar');
         $(`.${activeClass}`).classList.toggle('ocultar')
-        // element.classList.toggle('ocultar');
     }
 }
 
-
 nav.addEventListener('click', async function (e) {
     const target = e.target;
-    const id = target.id
-    //aproximamiento de configuración
     selectContainer(target);
 });
 
@@ -62,11 +63,6 @@ searchButton.addEventListener('click', async function () {
     await controlador.searchBook(searchValue);
     // console.log(booksFromGoogle);
 });
-
-
-// librosPendientes.addEventListener('click', async function(e){
-//     await controlador.getGoogleBooksFromFirebase(false);
-// })
 
 searchContainer.addEventListener('click', async function (e) {
     // console.log(e, e.srcElement.localName)
@@ -89,7 +85,7 @@ searchContainer.addEventListener('click', async function (e) {
         await controlador.postBookToFirebase(selfLink);
         let extraCardInfo = target.parentElement
         let p = view.createParagraph();
-        p.style.color = 'green';
+        p.style.color = 'white';
         p.textContent = 'Guardando libros en pendientes...'
         extraCardInfo.append(p);
         //QUEREMOS DESHABILITAR EL BOTON DE ENVIAR Y CERRAR EL CARD

@@ -36,6 +36,7 @@ class VolumeInfoFromMap {
         this.publisher = map['publisher']
         this.title = map['title']
         this.averageRating = map['averageRating']
+        this.ratingsCount = map['ratingsCount']
         this.categories = map['categories']
         this.description = map['description']
         this.publishedDate = map['publishedDate']
@@ -47,6 +48,8 @@ class AccessInfoFromMap {
     constructor(map){
         this.embeddable = map['embeddable']
         this.webReaderLink = map['webReaderLink']
+        this.pdf = map['pdf'];
+        this.epub = map['epub'];
     }
 }
 
