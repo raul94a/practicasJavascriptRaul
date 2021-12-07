@@ -12,9 +12,10 @@ body > * {
 }
 
 
-.contenedor-busqueda {
-    width: 90%;
-    
+.contenedor-busqueda,
+.contenedor-pendientes-render,
+.contenedor-leidos-render {
+    width: 90%;  
     margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(5, 1fr);

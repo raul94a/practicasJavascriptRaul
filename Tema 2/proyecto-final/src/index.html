@@ -2,11 +2,13 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="content-type"content="text/html; charset=utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="assets/styles/main.css">
-    <!-- <script type="text/javascript" src="https://www.google.com/books/jsapi.js"></script>
+  <meta charset="UTF-8">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- <link rel="stylesheet" href="assets/styles/header.css"> -->
+  <link rel="stylesheet" href="assets/styles/nav.css">
+  <link rel="stylesheet" href="assets/styles/main.css">
+  <!-- <script type="text/javascript" src="https://www.google.com/books/jsapi.js"></script>
     <script type="text/javascript">
       google.books.load();
 
@@ -17,31 +19,47 @@
 
       google.books.setOnLoadCallback(initialize);
     </script> -->
-    <title>Document</title>
+  <title>Document</title>
 </head>
 
 <body>
-    <!-- <div id="viewerCanvas" style="width: 750px; height: 700px"></div> -->
+  <!-- <div id="viewerCanvas" style="width: 750px; height: 700px"></div> -->
 
+  <!-- ELEMENTOS ESTÁTICOS -->
+  <header>
+    <div class="logo"></div>
+    <nav>
+      <ul>
+        <li id="pendientes">Libros pendientes</li>
+        <li id="leidos">Libros leídos</li>
+        <li id="busqueda">Búsqueda de libros</li>
+      </ul>
+    </nav>
+
+  </header>
+  <!-- FIN ELEMENTOS ESTÁTICOS -->
+  <section class="contenedor-principal">
     <div class="backdrop ocultar"></div>
-    <div class="contenedor-principal">
+    <div class="busqueda">
+      <h1>BÚSQUEDA DE LIBROS</h1>
       <div class="control-busqueda">
         <input type="text" id="input-busqueda">
         <button id="btnBuscar">Buscar</button>
       </div>
-      <div class="contenedor-busqueda">
-
+      <div class="contenedor-busqueda"></div>
+    </div>
+    <div class="contenedor-pendientes ocultar">
+      <h1>Libros pendientes</h1>
+      <div class="contenedor-pendientes-render">
       </div>
     </div>
+    <div class="contenedor-leidos ocultar">
+      <h1>Libros leídos</h1>
+      <div class="contenedor-leidos-render"></div>
+    </div>
+  </section>
 
-
-
-
-    <!-- <script src=./models/BookFromGoogle.js"></script>
-    <script src="./models/Book.js"></script>
-    <script src="./controller/Controller.js"></script> -->
-    <script src="./assets/js/index.js" type="module"></script>
-    <!-- <script src="../test/test.js" ></script> -->
+  <script src="./assets/js/index.js" type="module"></script>
 </body>
 
 </html>

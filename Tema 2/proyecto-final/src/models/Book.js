@@ -21,6 +21,7 @@ export class Book {
         // console.log(map['addedDate'])
         let book = new Book(map['selfLink'], map['addedDate'], map['readDate'], map['read'], map['rating']);
         book.firebaseId = firebaseId;
+        
         return book;
     }
 }

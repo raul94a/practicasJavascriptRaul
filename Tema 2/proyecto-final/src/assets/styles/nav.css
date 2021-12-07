@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap');
+/**
+    font-familly: 'Raleway', sans-serif
+*/
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 15vh;
+    padding: 0.75rem;
+    border-bottom: 2px solid rgba(185, 178, 181, 0.85);
+    box-shadow: 10px 0px 10px 0px grey;
+    /* background: orange; */
+}
+header .logo{
+    /* /* margin: 0 auto; */
+    
+    /* border:1px solid black; */
+    /* margin-top: 6.5%; */
+    /* height4 10rem; */
+    padding: 3.2rem;
+    flex-grow: 3;
+    background-image: url('../img/logo.png');
+    
+    background-size: 7rem;
+    background-repeat: no-repeat;
+}
+
+nav{
+    flex-grow: 2;
+    margin-bottom: 1%;
+    top: 7.7rem;
+    margin-right: 1rem;
+    
+
+
+}
+nav ul {
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    align-items: center;
+    justify-content: space-between
+}
+nav ul li{
+    width: 25%;
+    padding: 1.5rem;
+    text-align: center;
+    font-size: 1rem;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 600;
+    transition: all 450ms ease-in-out;
+}
+nav ul li:hover{
+    color: rgb(15, 64, 138);
+    text-transform: uppercase;
+    border-right: 1px solid grey;
+    border-bottom: 1px solid grey;
+    box-shadow: 3px 3px 5px 1px grey;
+    border-radius: 40px;
+    letter-spacing: 2px;
+    font-size: 1.1rem;
+    text-decoration: underline;
+    font-weight: bold;
+    cursor: pointer;
+}
+nav ul li:hover::first-letter{
+    font-size: 1.2rem;
+}
