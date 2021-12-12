@@ -8,6 +8,7 @@ import { View } from "../views/View.js";
 export class Controller {
     booksFromFirebase = [];
     booksFromGoogle = [];
+    searchedBooks = [];
     view = new View();
 
     /**
@@ -19,13 +20,30 @@ export class Controller {
     async searchBook(book) {
         //Por ahora vamos a hacer una búsquda básica
         let resultSet = await HttpRequest.httpGet(false, book);
+
         console.log(resultSet)
         let booksFromGoogle = [];
         for (let result of resultSet['items']) {
             booksFromGoogle.push(new BookFromGoogle(result))
         }
-        this.view.renderBooks(booksFromGoogle)
+        this.view.renderBooks(booksFromGoogle, true, false, this.booksFromGoogle);
         return booksFromGoogle;
+    }
+    async searchBookWithPagination(book) {
+        let busqueda = document.querySelector('.busqueda');
+        this.searchedBooks = [];
+        console.log(busqueda.children.length)
+        if(busqueda.children.length !== 3){
+            document.querySelector('.pagination-control').remove();
+        }
+        let resultSet = await HttpRequest.httpGet(false, book);
+        for (let result of resultSet['items']) {
+            this.searchedBooks.push(new BookFromGoogle(result));
+        }
+        this.view.renderSearchedBooksWithPagination(this.searchedBooks, 10, this.booksFromGoogle);
+
+        busqueda.append(this.view.paginateSearch(this.searchedBooks));
+
     }
 
     /**
@@ -34,7 +52,7 @@ export class Controller {
      * booksFromGoogle queda seteada con objetos de tipo BookFromGoogle, que contiene tanto datos de Google Books como de Firebase
      * @returns Array
      */
-     async getBook(book) {
+    async getBook(book) {
         let bookFromGoogle = new BookFromGoogle(await HttpRequest.httpGetBook(book.selfLink));
         bookFromGoogle.addFirebaseData(book);
         return bookFromGoogle;
@@ -93,7 +111,7 @@ export class Controller {
         //DEBEMOS CAMBIAR EL STATUS TB EN EL ARRAY DE BOOKSFROMGOOGLE
         let read = isRead ? false : true;
         // console.log(this.booksFromGoogle)
-        let book  = this.booksFromGoogle.filter(el => el.firebaseId === firebaseId)[0]
+        let book = this.booksFromGoogle.filter(el => el.firebaseId === firebaseId)[0]
         console.log(book)
         book.read = read;
         // console.log(this.booksFromFirebase);
@@ -101,9 +119,11 @@ export class Controller {
         await HttpRequest.setReadingDate(firebaseId, read)
         //AQUÍ HABRÁI QUE RENDERIZAR
         this.view.renderStoredBook(book, read)
-        
     }
-    async init(){
+    existsStoredBook(selfLink) {
+        return this.booksFromGoogle.find(e => e.selfLink === selfLink);
+    }
+    async init() {
         //cargamos la data
         await this.getGoogleBooksFromFirebase();
         //cargamos los libros leidos y pendientes

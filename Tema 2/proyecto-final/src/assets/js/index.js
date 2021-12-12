@@ -13,7 +13,7 @@ import { Controller } from "../../controller/Controller.js";
 
 let controlador = new Controller();
 //cargamos los datos!
-// await controlador.init()
+await controlador.init()
 
 
 const $ = selector => document.querySelector(selector);
@@ -21,6 +21,7 @@ const $ = selector => document.querySelector(selector);
 const searchButton = $('#btnBuscar');
 const searchInput = $('#input-busqueda');
 const searchContainer = $('.contenedor-principal');
+const busqueda = $('.busqueda');
 const backdrop = $('.backdrop');
 const nav = $('nav');
 
@@ -60,9 +61,22 @@ backdrop.addEventListener('click', function () {
 
 searchButton.addEventListener('click', async function () {
     let searchValue = searchInput.value;
-    await controlador.searchBook(searchValue);
+    await controlador.searchBookWithPagination(searchValue);//searchBook(searchValue);
     // console.log(booksFromGoogle);
 });
+
+busqueda.addEventListener('click', function(e){
+    const target = e.target;
+   // console.log(target);
+    if(target.parentElement.classList.contains('pagination-control')){
+        //alert(target.textContent);
+        //console.log(target.textContent)
+        let page = parseInt(target.textContent);
+        //console.log(page);
+        controlador.view.renderSearchedBooksWithPagination(controlador.searchedBooks, page * 10, controlador.booksFromGoogle);
+    }
+});
+
 
 searchContainer.addEventListener('click', async function (e) {
     // console.log(e, e.srcElement.localName)
@@ -83,7 +97,7 @@ searchContainer.addEventListener('click', async function (e) {
     } else if (classList.contains('btn-firebase')) {
         const selfLink = target.getAttribute('data-selfLink');
         await controlador.postBookToFirebase(selfLink);
-        let extraCardInfo = target.parentElement
+        let extraCardInfo = target.closest('.extra-info-card-move')
         let p = view.createParagraph();
         p.style.color = 'white';
         p.textContent = 'Guardando libros en pendientes...'
@@ -92,6 +106,7 @@ searchContainer.addEventListener('click', async function (e) {
         //NECESITAMOS EL extrainfocard...
         //Un debounce...
         target.disabled = true;
+        // target.remove();
         setTimeout(() => {
             setTimeout(() => {
                 view.toggleBackdrop()

@@ -111,16 +111,68 @@ export class View {
 
 
     }
+    cleanDescription(description = ''){
+        
+       
+        return description;
+    }
 
-    createExtraBookCard(book, isSearched = true) {
+    //función de paginacion
+    paginationButton(name, className = ''){
+        let button = this.createButton();
+        button.classList.add('btn-pagination')
+        if(name === '->'){
+            let i = document.createElement('i');
+            i.classList.add('fas', 'fa-arrow-right');
+            button.append(i);
+            
+        }else if(name === '<-'){
+            let i = document.createElement('i');
+            i.classList.add('fas', 'fa-arrow-left');
+            button.append(i);
+        }else{
+            button.textContent = name;
+
+        }
+        return button;
+    }
+    paginateSearch(books){
+        const numberOfBooks = books.length;
+        console.log(numberOfBooks);
+        const itemsPerPage = 10;
+        console.log(itemsPerPage);
+        const pages = numberOfBooks / itemsPerPage;
+        console.log(pages);
+
+        let control = this.createDiv();
+        control.classList.add('pagination-control');
+        let backwards = this.paginationButton('<-');
+        control.append(backwards);
+        //aqui debemos determinar el número de páginas
+        for(let i = 1; i <= pages; i++){
+            let pageNumber = this.paginationButton(`${i}`);
+            control.append(pageNumber);
+        }
+        //
+        let forwards = this.paginationButton('->');
+        control.append(forwards);
+        return control;
+    }
+
+
+    //esta función se debe separar en los componentes internos
+    createExtraBookCard(book, isSearched = true, storedBooks = []) {
         // console.log(book)
         let extraCard = this.createDiv();
         let volumeInfo = book.volumeInfo;
+
         let bookTitle = volumeInfo.title;
         let imageLinks = volumeInfo.imageLinks;
         let bookCategory = volumeInfo.categories;
         let bookAuthor = volumeInfo.authors;
         let bookDescription = volumeInfo.description ? volumeInfo.description : 'Descripción no disponible';
+       bookDescription = this.cleanDescription(bookDescription);
+        
         let img = this.createImg();
         let title = this.createH1();
         let author = this.createH2();
@@ -130,6 +182,9 @@ export class View {
         let rating = this.createParagraph();
         extraCard.classList.add('extra-info-card', 'ocultar');
         let description = this.createParagraph();
+        if(bookDescription === 'Descripción no disponible'){
+            description.classList.add('center-p')
+        }
         let headerExtraCard = this.createDiv();
         headerExtraCard.classList.add('header-extra-card');
         let leftSectionHeaderExtraCard = this.createDiv();
@@ -146,7 +201,7 @@ export class View {
         img.setAttribute('src', `${imageLinks ? imageLinks.smallThumbnail : 'https://food-rating.com/static/img/image-not-available.png'}`);
         leftSectionHeaderExtraCard.append(img);
         leftSectionHeaderExtraCard.append(publishedDate);
-        
+
         let bookInfoLeftSectionHeaderExtraCard = this.createDiv();
         let ratingStars = this.createAverageRatingStars(parseFloat(volumeInfo.averageRating ? rating : 0), volumeInfo.ratingsCount ? volumeInfo.ratingsCount : 0);
         bookInfoLeftSectionHeaderExtraCard.classList.add('extra-card-book-info');
@@ -175,12 +230,26 @@ export class View {
         extraCard.append(descriptionTitle);
         extraCard.append(description);
         //
+        let divBtnControl = this.createDiv();
+        divBtnControl.classList.add('btnControl');
         if (isSearched) {
-            let btnAddToList = this.createButton();
-            btnAddToList.textContent = "Añadir a pendientes";
-            btnAddToList.setAttribute('data-selfLink', book.selfLink);
-            btnAddToList.classList.add('btn-firebase')
-            extraCard.append(btnAddToList);
+            let exists = storedBooks.some(e => e.selfLink === book.selfLink);
+            
+
+                let btnAddToList = this.createButton();
+                let btnText = this.createParagraph();
+                btnText.textContent = 'El libro ya ha sido añadido a tu lista'
+                if(!exists){
+                    btnAddToList.textContent = "Añadir a pendientes";
+                    btnAddToList.setAttribute('data-selfLink', book.selfLink);
+                    btnAddToList.classList.add('btn-firebase')
+                    divBtnControl.append(btnAddToList);
+
+                }else{
+                    divBtnControl.append(btnText);
+                }
+           
+            // extraCard.append(btnAddToList);
         } else { //Información mostrada cuando YA lo tenemos en PENDIENTE o en LEIDO
             //se captura la propiedad read
             let read = book.read;
@@ -190,13 +259,13 @@ export class View {
                 btnRead.textContent = 'He leído el libro';
                 btnRead.setAttribute('data-firebase', book.firebaseId);
                 btnRead.classList.add('btnReadBook');
-                extraCard.append(btnRead)
+                divBtnControl.append(btnRead)
             } else {
                 let btnRead = this.createButton();
                 btnRead.textContent = 'Eliminar de libros leídos';
                 btnRead.setAttribute('data-firebase', book.firebaseId);
                 btnRead.classList.add('btnReadBook-remove');
-                extraCard.append(btnRead)
+                divBtnControl.append(btnRead)
             }
         }
 
@@ -205,7 +274,8 @@ export class View {
         btnRead.setAttribute('target', '__blank')
         btnRead.classList.add('btn-read')
         btnRead.textContent = 'Leer ONLINE'
-        extraCard.append(btnRead);
+        divBtnControl.append(btnRead);
+        extraCard.append(divBtnControl);
 
         // let btnPdf = document.createElement('a');
         // btnPdf.setAttribute('href', book.accessInfo.pdf.acsTokenLink);
@@ -294,7 +364,7 @@ export class View {
     }
 
 
-    renderBooks(booksFromGoogle, isSearched = true, isRead = false) {
+    renderBooks(booksFromGoogle, isSearched = true, isRead = false, storedBooks = []) {
         let searchContainer = isSearched
             ? this.$('.contenedor-busqueda')
             : isRead
@@ -309,10 +379,22 @@ export class View {
         }
         for (let book of booksFromGoogle) {
             let bookCardContainer = this.createBookCard(book);
-            let extraCard = this.createExtraBookCard(book, isSearched);
+            let extraCard = this.createExtraBookCard(book, isSearched, storedBooks);
             bookCardContainer.append(extraCard);
             searchContainer.append(bookCardContainer);
         }
+        //searchContainer.parentElement.append(this.paginateSearch(booksFromGoogle))
+    }
+    renderSearchedBooksWithPagination(searchedBooks, number = 10, storedBooks = []){
+        let searchContainer = this.$('.contenedor-busqueda');
+        searchContainer.textContent = '';
+        for(let i = (number - 10); i < number; i++){
+            let bookCardContainer = this.createBookCard(searchedBooks[i]);
+            let extraCard = this.createExtraBookCard(searchedBooks[i], true, storedBooks);
+            bookCardContainer.append(extraCard);
+            searchContainer.append(bookCardContainer);
+        }
+        //searchContainer.parentElement.append(this.paginateSearch(searchedBooks));
     }
     renderStoredBook(bookFromGoogle, read = false) {
         let pendientes = this.$(`${!read ? ".contenedor-pendientes-render" : ".contenedor-leidos-render"}`);
