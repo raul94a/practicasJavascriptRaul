@@ -22,6 +22,33 @@ html, body {
 body>* {
     flex-shrink: 0;
 }
+/* body span{
+    z-index: -9999;
+    position: absolute;
+    width: 10%;
+    height: 20%;
+    border-radius: 50%;
+    background-color: red;
+    animation: movement 4s infinite;
+} */
+/* @keyframes movement {
+    0%{
+        top: 0;
+        left: 50%;
+    }
+    20%{
+        top: 50%;
+        left:0;
+    }
+    50%{
+        top: 30%;
+        left: 20%;
+    }
+    80%{
+        top: 60%;
+        left:40%;
+    }
+} */
 
 /******************AJUSTES GENERALES******************/
 
@@ -55,7 +82,6 @@ p {
     font-size: 2.5rem;
     text-shadow: 4px 0px black;
     letter-spacing: 0.3rem;
-    /* animation: shadow-anim 2s linear infinite; */
 }
 .control-busqueda input{
     border:none;
@@ -90,15 +116,6 @@ p {
     cursor: pointer;
 }
 
-@keyframes shadow-anim{
-    from {
-        /* font-size: 40rem; */
-    }
-    to{
-        /* text-shadow: 2px 2px yellow; */
-        /* font-size: 0.5rem; */
-    }
-}
 
 .contenedor-busqueda,
 .contenedor-pendientes-render,
@@ -119,15 +136,12 @@ p {
 
 .book-card {
     width: 250px;
-    /* height: 100%; */
     -webkit-box-shadow: 9px -7px 15px 0px rgba(146, 146, 146, 0.98);
     box-shadow: 9px -7px 10px 0px rgba(146, 146, 146, 0.98);
-    /* height: 100%; */
     height: 450px;
     overflow-y: auto;
     border-bottom-left-radius: 40px;
     border-bottom-right-radius: 40px;
-    /* border:1px solid black; */
 }
 .book-card::-webkit-scrollbar{
     display: none;
@@ -136,41 +150,30 @@ p {
 .book-card img {
     width: 270px;
     height: 325px;
-    /* border-radius: 20px; */
+   
     object-fit: fill;
 }
 .book-card img:hover{
     filter: brightness(50%);
 }
-/* .book-card:hover{
-    transition: all 4s ease;
-    width: 350px;
-    
-    position: absolute;
-    z-index:50
-    ;background-color: coral;
-}
-.book-card:hover img{
-    width: 350px;
-} */
+
 .book-card-info {
-    /* z-index: 10; */
+  
     width: 100%;
     transition: all 4s ease;
-    /* border:1px solid black; */
+ 
     
+}
+.book-card-info:hover{
+    box-shadow: 5px -10px blue;
 }
 
-/* .book-card-info:hover{
-    background-color: red;
-    width: 100%;
-} */
 
 .book-card-info p {
     width: 90%;
     color:black;
     padding: 0.65rem;
-    /* border-bottom: 1px solid grey; */
+ 
 }
 
 .extra-info-card {
@@ -214,9 +217,7 @@ p {
     text-transform: uppercase;
     font-size: 1.8rem;
     text-shadow: 3px -5px rgba(6, 2, 7, 0.575);
-    /* transition: transform 1s ease; */
-    /* transform: rotate(180deg) */
-    /* transition: all 3s ease; */
+    
 }
 #extra-card-description + p{
     text-align: justify;
@@ -230,8 +231,7 @@ p {
     text-align: center;
 }
 #extra-card-description:hover{
-    /* transform: rotate(-360deg); */
-    /* color:red */
+   
 }
 
 .extra-info-card>p {
@@ -239,7 +239,7 @@ p {
     text-align: justify;
 }
 
-/* Standard syntax */
+
 @keyframes mymove {
     from {
         top: 0px;
@@ -282,11 +282,10 @@ p {
 }
 
 .extra-card-book-info {
-    /* margin-top:10%; */
+   
     display: flex;
     flex-direction: column;
-    /* justify-content: space-around; */
-    /* align-items: center; */
+   
 }
 .extra-card-book-info > * {
     color:white;
@@ -304,7 +303,7 @@ p {
 }
 
 .right-header-extra-card {
-    /* border:1px solid black; */
+    
     width: 50%;
     display: flex;
     flex-direction: column;
@@ -430,8 +429,8 @@ BOTONES
 	text-shadow:0px 1px 0px #263666;
 }
 .btn-pagination:hover {
-	background:linear-gradient(to bottom, #07006e 5%, #040040 100%);
-	background-color:#07006e;
+	background:linear-gradient(to bottom, #2a71c2 5%, #0078af 100%);
+	/* background-color:#07006e; */
 }
 .btn-pagination:active {
 	position:relative;

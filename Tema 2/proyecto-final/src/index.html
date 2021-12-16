@@ -39,7 +39,7 @@
       <h1>BÚSQUEDA DE LIBROS</h1>
       <div class="control-busqueda">
         <input type="text" id="input-busqueda">
-        <button id="btnBuscar">Buscar</button>
+        <button id="btnBuscar"><i class="fas fa-search"></i></button>
       </div>
       <div class="contenedor-busqueda"></div>
     </div>
@@ -57,58 +57,9 @@
     <!-- <button data-isbn="9788490691779" id='btn1'>CAMINO</button>
     <button id="btn2" data-isbn="9780061724350">PRINCIPE</button> -->
   </section>
-
+  <span></span>
   <script src="./assets/js/index.js" type="module"></script>
-  <!-- <script id="viewer" type="text/javascript" data-isbn = ''>
-    // let isbn = ''
-    const f = (isbn) => {}
-    google.books.load();
-    function initialize(isbn) {
-      var viewer = new google.books.DefaultViewer(document.getElementById('viewerCanvas'));
-      viewer.load(`ISBN:${isbn}`);
-
-    }
-
-    google.books.setOnLoadCallback(initialize);
-
-
-
-    let camino = document.getElementById('btn1');
-    let principe = document.getElementById('btn2');
-    camino.addEventListener('click', function () {
-      isbn = camino.getAttribute('data-isbn');
-
-    })
-    principe.addEventListener('click', function () {
-      let isbn = principe.getAttribute('data-isbn');
-      let script = document.createElement('script');
-      script.setAttribute('type', 'text/javascript')
-      script.textContent = `
-        let isbn = ${isbn};
-        google.books.load();
-
-        function initialize(){
-          var viewer = new google.books.DefaultViewer(document.getElmenetById('viewerCanvas'));
-          console.log(viewer)
-          viewer.load('ISBN:${isbn}');
-        }
-        google.books.setOnLoadCallback(initialize);
-      `;
-      let body = document.querySelector('body')
-      body.append(script)
-    })
-
-
-
-
-    /**
-     * 9788490691779
-     * 9780061724350
-     *
-     *
-     * */
-
-  </script> -->
+  
 </body>
 
 </html>

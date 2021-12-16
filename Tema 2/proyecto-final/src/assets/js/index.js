@@ -2,12 +2,13 @@ import { Controller } from "../../controller/Controller.js";
 
 /**
  * TODO 
- * 1. Pinta la información correctamente dentro de los extraCardInfo
- *  Búsqueda => FECHA DE PUBLICACIÓN, MINIATURA (METER EN DIV Y FLOATEARLO A LA DERECHA)
  * 
- * 2. BOTONES DE OPCIONES DE LECTURA Y DESCARGA EN EL CASO DE QUE ESTÉ DISPONIBLE
- * 
- * 3. ¿MODAL DE RATING DE LIBRO?
+            * 1. Pinta la información correctamente dentro de los extraCardInfo
+              Búsqueda => FECHA DE PUBLICACIÓN, MINIATURA (METER EN DIV Y FLOATEARLO A LA DERECHA)
+             
+            * 2. BOTONES DE OPCIONES DE LECTURA Y DESCARGA EN EL CASO DE QUE ESTÉ DISPONIBLE
+             
+            * 3. ¿MODAL DE RATING DE LIBRO?
  * 
  */
 
@@ -15,8 +16,40 @@ let controlador = new Controller();
 //cargamos los datos!
 await controlador.init()
 
-
+/**
+ * selecciona un elemento del dom pasandole el selector
+ * @param {string} selector 
+ * @returns 
+ */
 const $ = selector => document.querySelector(selector);
+
+/**
+ * Los tres primeros parámetros son los mensajes que aparecen en orden tras ejecutar la función
+ * extraCardInfo es el elemento del dom donde se recoge la información adicional del libro
+ * target es el botón donde se ha realizado click
+ * view es la instancia de la clase View. 
+ * @param {string} paragraphText 
+ * @param {string} firstMessage 
+ * @param {string} secondMessage 
+ * @param {DOM element} extraCardInfo 
+ * @param {DOM element} target 
+ * @param {View} view 
+ */
+const delayApp = (paragraphText, firstMessage, secondMessage, extraCardInfo,target, view) => {
+    let p = view.createParagraph();
+    p.style.color = 'white';
+    p.textContent = paragraphText
+    extraCardInfo.append(p);
+    setTimeout(() => {
+        setTimeout(() => {
+            view.toggleBackdrop()
+            view.toggleExtraInfoCard(false, extraCardInfo);
+            target.remove();
+            p.textContent = firstMessage
+        }, 1000)
+        p.textContent = secondMessage
+    }, 2000);
+}
 
 const searchButton = $('#btnBuscar');
 const searchInput = $('#input-busqueda');
@@ -98,24 +131,7 @@ searchContainer.addEventListener('click', async function (e) {
         const selfLink = target.getAttribute('data-selfLink');
         await controlador.postBookToFirebase(selfLink);
         let extraCardInfo = target.closest('.extra-info-card-move')
-        let p = view.createParagraph();
-        p.style.color = 'white';
-        p.textContent = 'Guardando libros en pendientes...'
-        extraCardInfo.append(p);
-        //QUEREMOS DESHABILITAR EL BOTON DE ENVIAR Y CERRAR EL CARD
-        //NECESITAMOS EL extrainfocard...
-        //Un debounce...
-        target.disabled = true;
-        // target.remove();
-        setTimeout(() => {
-            setTimeout(() => {
-                view.toggleBackdrop()
-                view.toggleExtraInfoCard(false, extraCardInfo);
-                target.remove();
-                p.textContent = 'El libro ya ha sido añadido a lista de pendientes'
-            }, 1000)
-            p.textContent = 'LISTO!'
-        }, 2000);
+        delayApp('Guardando libros en pendientes...','El libro ya ha sido añadido a la lista de pendientes', 'LISTO!', extraCardInfo, target, view)
 
         //AÑADIR EL LIBRO A PENDIENTES1!!!!!!!
     } else if (classList.contains('btnReadBook')) {

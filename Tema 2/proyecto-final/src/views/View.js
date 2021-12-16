@@ -44,8 +44,10 @@ export class View {
         let div = this.createDiv();
         div.classList.add('average-rating-stars');
         let parteEntera = parseInt(stars);
+        let numeroEstrellasPintadas = 0;
         for (let i = 0; i < parteEntera; i++) {
-            div.append(this.createStar('fas', 'fa-star'))
+            div.append(this.createStar('fas', 'fa-star'));
+            numeroEstrellasPintadas++;
         }
         //media estrella
         let parteDecimal = (stars - parteEntera)
@@ -55,21 +57,19 @@ export class View {
             let pd = parseFloat(parteDecimal[1]);
             console.log(pd)
 
-            div.append(this.createStar('fas', 'fa-star-half-alt'))
+            div.append(this.createStar('fas', 'fa-star-half-alt'));
+            numeroEstrellasPintadas++;
 
         }
+      
 
-        let resto = parseInt(parteDecimal) == 0
-            ? stars == 5
-                ? 0
-                : 5 - parseInt(stars)
-            : 5 - parseInt(stars)
-        if (stars >= 4.5) {
-            resto = 0;
-        }
+        let resto = 5 - numeroEstrellasPintadas;
+        
+    
         for (let i = 0; i < resto; i++) {
             div.append(this.createStar('far', 'fa-star'))
         }
+
         let p = this.createParagraph();
         p.textContent = `(${ratingsCount})`;
         p.style.display = 'inline-block'
@@ -385,6 +385,12 @@ export class View {
         }
         //searchContainer.parentElement.append(this.paginateSearch(booksFromGoogle))
     }
+    /**
+     * 
+     * @param {*} searchedBooks =>Elementos que quiero mostrar en la paginación
+     * @param {*} number => Número de elementos en paginación
+     * @param {*} storedBooks => no hacer caso
+     */
     renderSearchedBooksWithPagination(searchedBooks, number = 10, storedBooks = []){
         let searchContainer = this.$('.contenedor-busqueda');
         searchContainer.textContent = '';
@@ -403,5 +409,9 @@ export class View {
         bookCardContainer.append(extraCard);
         pendientes.append(bookCardContainer);
 
+    }
+
+    renderStoredBooksWithPagination(booksFromGoogle, number = 10){
+        
     }
 }

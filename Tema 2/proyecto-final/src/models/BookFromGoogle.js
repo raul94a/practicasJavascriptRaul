@@ -38,10 +38,11 @@ class VolumeInfoFromMap {
         this.averageRating = map['averageRating']
         this.ratingsCount = map['ratingsCount']
         this.categories = map['categories']
-        this.description = map['description']
+        this.description = map['description'];
         this.publishedDate = map['publishedDate']
         this.pageCount = map['pageCount']
     }
+    
 }
 
 class AccessInfoFromMap {

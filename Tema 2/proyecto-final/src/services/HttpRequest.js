@@ -1,10 +1,12 @@
 class HttpRequest {
     static async httpGet(isFirebaseRequest, libro = '') {
+        //poner tu api key de google!
+        const key = 'AIzaSyDUmVoQie3zUY6ESE4lF94CU0qyV9oswS8';
         //
         let url =
             isFirebaseRequest
                 ? 'https://booksapp-7847c-default-rtdb.europe-west1.firebasedatabase.app/libros.json'
-                : `https://www.googleapis.com/books/v1/volumes?q=${libro}&maxResults=40&key=AIzaSyDUmVoQie3zUY6ESE4lF94CU0qyV9oswS8`;
+                : `https://www.googleapis.com/books/v1/volumes?q=${libro}&maxResults=40&key=${key}`;
         //vamos a declarar una promesa
         const promise = new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();
@@ -16,6 +18,7 @@ class HttpRequest {
                 resolve(xhr.response);
                 //console.log(xhr.status);
             };
+            xhr.onerror = function(){reject(xhr.response)}
 
             xhr.send();
         });

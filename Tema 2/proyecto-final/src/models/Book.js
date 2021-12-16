@@ -3,7 +3,6 @@ export class Book {
     //cuando insertemos no será necesaria la firebase ID, pero al seleccionar si debemos de meterle la FIREBASEID de forma dinámica!
     constructor(
         selfLink,
-        
         addedDate = new Date().toLocaleString('es-ES', { day: "numeric", month: '2-digit', year: 'numeric' }),
         readDate = '',
         read = false,

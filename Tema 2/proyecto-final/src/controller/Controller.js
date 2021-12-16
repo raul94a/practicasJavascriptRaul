@@ -41,8 +41,8 @@ export class Controller {
             this.searchedBooks.push(new BookFromGoogle(result));
         }
         this.view.renderSearchedBooksWithPagination(this.searchedBooks, 10, this.booksFromGoogle);
-
-        busqueda.append(this.view.paginateSearch(this.searchedBooks));
+        //INTRODUCIMOS LOS BOTONES JUSTO DEBAJO DEL BUSCADOR
+        document.querySelector('.control-busqueda').after(this.view.paginateSearch(this.searchedBooks));
 
     }
 
@@ -129,6 +129,7 @@ export class Controller {
         //cargamos los libros leidos y pendientes
         this.view.renderBooks(this.filterBooksByReadStatus(false), false);
         this.view.renderBooks(this.filterBooksByReadStatus(true), false, true);
+        //añadir paginación...
     }
 
 
