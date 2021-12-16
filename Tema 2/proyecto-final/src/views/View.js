@@ -1,4 +1,4 @@
-import { BookFromGoogle } from "../models/BookFromGoogle"
+import { BookFromGoogle } from "../models/BookFromGoogle.js"
 
 export class View {
     $(selector) {
@@ -453,7 +453,7 @@ export class View {
         //searchContainer.parentElement.append(this.paginateSearch(searchedBooks));
     }
     /**
-     * Renderiza un libro que VAYA a ser almacenado en FIREBASE (NO LEIDOS)
+     * Renderiza un libro que VAYA a ser almacenado en FIREBASE (NO LEIDOS) => read es false
      * Renderiza un libro que haya cambiado su estado de lectura (Cambia de NO LEIDOS a LEIDOS y viceversa)
      * @param {BookFromGoogle} bookFromGoogle 
      * @param {Boolean} read 

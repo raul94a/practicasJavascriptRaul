@@ -17,7 +17,7 @@ export class BookFromGoogle {
     /**
      * Permite añadir la información que guardo en Firebase acerca de cada libro a la info que proporciona la API de Google
      * 
-     * @param {Book} book 
+     * @param {*} book 
      */
     addFirebaseData(book){
         this.read = book.read
