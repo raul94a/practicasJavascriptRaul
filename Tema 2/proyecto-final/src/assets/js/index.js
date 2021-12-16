@@ -1,27 +1,25 @@
 import { Controller } from "../../controller/Controller.js";
 
-/**
- * TODO 
- * 
-            * 1. Pinta la información correctamente dentro de los extraCardInfo
-              Búsqueda => FECHA DE PUBLICACIÓN, MINIATURA (METER EN DIV Y FLOATEARLO A LA DERECHA)
-             
-            * 2. BOTONES DE OPCIONES DE LECTURA Y DESCARGA EN EL CASO DE QUE ESTÉ DISPONIBLE
-             
-            * 3. ¿MODAL DE RATING DE LIBRO?
- * 
- */
-
-let controlador = new Controller();
-//cargamos los datos!
-await controlador.init()
 
 /**
  * selecciona un elemento del dom pasandole el selector
  * @param {string} selector 
  * @returns 
  */
+
 const $ = selector => document.querySelector(selector);
+//instanciamos el controlador
+let controlador = new Controller();
+//cargamos los datos!
+await controlador.init()
+
+
+const searchButton = $('#btnBuscar');
+const searchInput = $('#input-busqueda');
+const searchContainer = $('.contenedor-principal');
+const busqueda = $('.busqueda');
+const backdrop = $('.backdrop');
+const nav = $('nav');
 
 /**
  * Los tres primeros parámetros son los mensajes que aparecen en orden tras ejecutar la función
@@ -31,10 +29,12 @@ const $ = selector => document.querySelector(selector);
  * @param {string} paragraphText 
  * @param {string} firstMessage 
  * @param {string} secondMessage 
- * @param {DOM element} extraCardInfo 
- * @param {DOM element} target 
+ * @param {HTMLElement} extraCardInfo 
+ * @param {HTMLElement} target 
  * @param {View} view 
- */
+ * */
+
+ 
 const delayApp = (paragraphText, firstMessage, secondMessage, extraCardInfo,target, view) => {
     let p = view.createParagraph();
     p.style.color = 'white';
@@ -51,23 +51,18 @@ const delayApp = (paragraphText, firstMessage, secondMessage, extraCardInfo,targ
     }, 2000);
 }
 
-const searchButton = $('#btnBuscar');
-const searchInput = $('#input-busqueda');
-const searchContainer = $('.contenedor-principal');
-const busqueda = $('.busqueda');
-const backdrop = $('.backdrop');
-const nav = $('nav');
-
+/**
+ * algoritmo de control de estado de contenedor -> encontrar el que se ha pinchado
+    Si está activo y hemos pinchado en el lo dejamos como está...
+    Si esta´inactivo y hemos pinchado sobre él tenemos que buscar el activo y apagarlo. Encender el pinchado
+    para saber a donde dirigirnos en el caso de pulsar un boton
+ * @param {HTMElement} target 
+ */
 const selectContainer = (target) => {
     let children = $('.contenedor-principal').children;
     let array = Array.from(children).slice(1);
     console.log(array)
-    //algoritmo de control de estado de contenedor -> encontrar el que se ha pinchado
-    /*
-    Si está activo y hemos pinchado en el lo dejamos como está...
-    Si esta´inactivo y hemos pinchado sobre él tenemos que buscar el activo y apagarlo. Encender el pinchado
-    */
-    //para saber a donde dirigirnos en el caso de pulsar un boton
+    
     const map = { "leidos": "contenedor-leidos", "pendientes": "contenedor-pendientes", "busqueda": "busqueda" };
     //seleccionamos la classList del elemento que NO está oculto...
     let activeClass = array.filter(el => !el.classList.contains('ocultar'))[0].classList[0]
@@ -78,26 +73,35 @@ const selectContainer = (target) => {
         $(`.${activeClass}`).classList.toggle('ocultar')
     }
 }
-
+/**
+ * Permite cambiar de vista al pulsar un boton
+ */
 nav.addEventListener('click', async function (e) {
     const target = e.target;
     selectContainer(target);
 });
 
-
+/**
+ * Ocultamos / Hacemos aparecer el backdrop y el card de info extra del libro al hacer click sobre el backdrop
+ */
 backdrop.addEventListener('click', function () {
     backdrop.classList.toggle('ocultar')
     $('.extra-info-card-move').classList.toggle('ocultar');
     $('.extra-info-card-move').classList.toggle('extra-info-card-move');
 
 })
-
+/**
+ * Evento de búsqueda de elementos
+ */
 searchButton.addEventListener('click', async function () {
     let searchValue = searchInput.value;
     await controlador.searchBookWithPagination(searchValue);//searchBook(searchValue);
     // console.log(booksFromGoogle);
 });
 
+/**
+ * Control de paginación, permite cambiar de página
+ */
 busqueda.addEventListener('click', function(e){
     const target = e.target;
    // console.log(target);
@@ -110,7 +114,10 @@ busqueda.addEventListener('click', function(e){
     }
 });
 
-
+//NO DEBERIA LLAMARSE ASÍ
+/**
+ * La funcionalidad se debe separar
+ */
 searchContainer.addEventListener('click', async function (e) {
     // console.log(e, e.srcElement.localName)
 
@@ -120,26 +127,28 @@ searchContainer.addEventListener('click', async function (e) {
     const tagList = ['p', 'img']
     // console.log(target, classList)
     let view = controlador.view;
+    //Permite controlar la aparición del card extra info
     if (classList.contains('book-card') || tagList.includes(tagName)) {
         //hacer aparecer al elemento
         let extraCardInfo = target.closest('.book-card').nextElementSibling;
         //console.log(extraCardInfo)
         view.toggleBackdrop();
         view.toggleExtraInfoCard(false, extraCardInfo);
-
+//controla el post del libro que le ha gustado al usuario a FIREBASE
     } else if (classList.contains('btn-firebase')) {
         const selfLink = target.getAttribute('data-selfLink');
         await controlador.postBookToFirebase(selfLink);
         let extraCardInfo = target.closest('.extra-info-card-move')
         delayApp('Guardando libros en pendientes...','El libro ya ha sido añadido a la lista de pendientes', 'LISTO!', extraCardInfo, target, view)
 
-        //AÑADIR EL LIBRO A PENDIENTES1!!!!!!!
+        //Pasar el libro a LEIDOS
     } else if (classList.contains('btnReadBook')) {
         let firebaseId = target.getAttribute('data-firebase');
         target.disabled = true;
         await controlador.changeReadStatus(firebaseId, false)
         target.closest('.contenedor-book-card').remove();
         view.toggleBackdrop();
+        //Pasar el libro a NO LEIDOS ---- hay redundancia se puede refactorizar
     } else if (classList.contains('btnReadBook-remove')) {
         let firebaseId = target.getAttribute('data-firebase');
         target.disabled = true;

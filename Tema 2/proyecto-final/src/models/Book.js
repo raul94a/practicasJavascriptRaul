@@ -1,6 +1,5 @@
 //clase de inserción y retirada de datos en FIREBASE!
 export class Book {
-    //cuando insertemos no será necesaria la firebase ID, pero al seleccionar si debemos de meterle la FIREBASEID de forma dinámica!
     constructor(
         selfLink,
         addedDate = new Date().toLocaleString('es-ES', { day: "numeric", month: '2-digit', year: 'numeric' }),
@@ -14,7 +13,14 @@ export class Book {
         this.read = read
         this.rating = rating
     }
-
+    /**
+     * El Object devuelto por la petición al endpoint de libros de Firebase es utilizado para generar
+     * la instancia de Book, al que se añadirá la propiedad firebaseId, que contiene el identificador único
+     * del libro en el endpoint de firebase
+     * @param {Object} map 
+     * @param {string} firebaseId 
+     * @returns 
+     */
     static createBookFromFirebase(map, firebaseId){
         // console.log(map)
         // console.log(map['addedDate'])

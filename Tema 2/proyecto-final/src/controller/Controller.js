@@ -12,16 +12,20 @@ export class Controller {
     view = new View();
 
     /**
-     * Devuelve 10 resultados...
+     *  @deprecated la nueva función utilizada es searchBookWithPagination
+     * Función necesaria para realizar búsquedas de libros en la API de Google
+     * El argumento book no tiene por qué ser un libro, también podría ser un autor
+     * El algoritmo de búsqueda de Google trabaja por nosotros
      * @param {String} book 
      * @returns Array{BookFromGoogle}
      */
-
+   
     async searchBook(book) {
-        //Por ahora vamos a hacer una búsquda básica
+        //generamos el resultSet de la petición a la API de Google (40 items max)
         let resultSet = await HttpRequest.httpGet(false, book);
 
         console.log(resultSet)
+        //guardamos cada resultado (instanciad e BookFromGoogle) en el Array declarado
         let booksFromGoogle = [];
         for (let result of resultSet['items']) {
             booksFromGoogle.push(new BookFromGoogle(result))
@@ -29,17 +33,26 @@ export class Controller {
         this.view.renderBooks(booksFromGoogle, true, false, this.booksFromGoogle);
         return booksFromGoogle;
     }
+    /**
+     * Busca el libro (o autor) en la API de Google
+     * Renderiza el resultado obtenido
+     * @param {string} book 
+     */
     async searchBookWithPagination(book) {
         let busqueda = document.querySelector('.busqueda');
         this.searchedBooks = [];
-        console.log(busqueda.children.length)
+        // console.log(busqueda.children.length)
+
+        //eliminamos la barra de búsqueda en el caso de que exista
         if(busqueda.children.length !== 3){
             document.querySelector('.pagination-control').remove();
         }
+        //generamos el resultSet (40 items) tras pedir datos a la API de Google
         let resultSet = await HttpRequest.httpGet(false, book);
         for (let result of resultSet['items']) {
             this.searchedBooks.push(new BookFromGoogle(result));
         }
+        //renderizamos el resultado de búsqueda
         this.view.renderSearchedBooksWithPagination(this.searchedBooks, 10, this.booksFromGoogle);
         //INTRODUCIMOS LOS BOTONES JUSTO DEBAJO DEL BUSCADOR
         document.querySelector('.control-busqueda').after(this.view.paginateSearch(this.searchedBooks));
@@ -59,32 +72,31 @@ export class Controller {
     }
 
     async getGoogleBooksFromFirebase() {
-        //embebemos la función de petición de libro específico en ESTA función por temas de seguridad
         /**
          * 
-         * @param {Book} book => recibe un libro de clase Book, que es creado a partir de datos de Firebase 
+         *Función que realiza la petición de todos los lirbos de firebase, devolviendo la lista de BookFromGoogle
+         * Unicamente es llamada cuando la App se inicia
          * @returns {BookFromGoogle} devuelve un objeto BookFromGoogle con los datos añadidos de firebase
          */
         //petición a firebase
         let items = await HttpRequest.httpGet(true);
         console.log(items);
         let booksFromGoogle = [];
+        //generamos nuestra lista de booksFromGoogle
         for (let i in items) {
             //petición a Google Books
             booksFromGoogle.push(
                 //hacemos la peticion a la api de google de cada libro que extraigamos de nuestro firebase
+                //recordemos que getBook genera un BookFromGoogle
                 await this.getBook(
+                    //items[i] => Object con la data de firebase
+                    // i => firebaseId
                     Book.createBookFromFirebase(items[i], i)
                 )
             );
         }
         this.booksFromGoogle = booksFromGoogle;
-        //ESTE FILTRADO HAY QUE SACARLO AUNA FUNCIÓN EXTERNA PARA FILTRAR AL PULSASR SOBER LEIDOS O NO LEIDOS
-        // const filteredBooksFromGoogle = this.booksFromGoogle.filter(book => isRead ? book.read : !book.read );
-        //AQUI NO RENDERIZAREMOS EN EL FUTURO, SI NO AL PULSAR SOBE LEIDOS, NO LEIDOS O EL BOTÓN DE BÚSQUEDA,
-        //es decir, en el futuro al pinchar sobre estos dos primero sbotones no se realiza la petición http, si no que se utilizan los datos en memoria
-        //los datos son cargados al cargar la página
-        // this.view.renderSearch2(filteredBooksFromGoogle, isSearched);
+        //por si acaso devuelvo la lista de BookFromGoogle, aunque no es necesario. Está en el controlador
         return this.booksFromGoogle;
     }
     filterBooksByReadStatus(isRead) {
@@ -100,13 +112,21 @@ export class Controller {
         const book = new Book(selfLink);
         await HttpRequest.postToFirebase(book);
         let bookFromGoogle = await this.getBook(book);
-        //AÑADIMOS
+        //AÑADIMOS A LA LISTA
         this.booksFromGoogle.push(bookFromGoogle);
-        //RENDEREIZAMOS
+        //RENDERIZAMOS EL LIBRO
         this.view.renderStoredBook(bookFromGoogle);
-        //en el futuro puedo añadir que el Book se añada a la lista de Book
-        //objetivo => reducir las peticiones HTTP
+        
     }
+    /**
+     * Aunque la función se llame changeReadStatus, a parte setea la fecha de lectura
+     * El motivo por el que la función no refiere a este hecho es que ambas modificaciones van de la mano
+     * si se modifica el estado de lectura, se modifica SIEMPRE la fecha de lectura 
+     * (leido => hay fecha,
+     *  no leído => no hay fecha )
+     * @param {string} firebaseId 
+     * @param {bool} isRead 
+     */
     async changeReadStatus(firebaseId, isRead) {
         //DEBEMOS CAMBIAR EL STATUS TB EN EL ARRAY DE BOOKSFROMGOOGLE
         let read = isRead ? false : true;
@@ -115,14 +135,25 @@ export class Controller {
         console.log(book)
         book.read = read;
         // console.log(this.booksFromFirebase);
+        //Hago dos peticiones pero podría realizarse con UNA sola petición
+        //lo hago así porque selecciono directamente el ENDPOINT del atributo en cuestión que quiero modificar
         await HttpRequest.changeReadStatus(firebaseId, isRead);
         await HttpRequest.setReadingDate(firebaseId, read)
         //AQUÍ HABRÁI QUE RENDERIZAR
         this.view.renderStoredBook(book, read)
     }
+    /**
+     * Comprueba si la lista de BooksFromGoogle del controlador contiene un libro específico
+     * @param {string} selfLink 
+     * @returns 
+     */
     existsStoredBook(selfLink) {
         return this.booksFromGoogle.find(e => e.selfLink === selfLink);
     }
+    /**
+     * Función iniciadora de la aplicación...
+     * Carga Todos los libros de firebase y renderiza los leídos y no leídos
+     */
     async init() {
         //cargamos la data
         await this.getGoogleBooksFromFirebase();

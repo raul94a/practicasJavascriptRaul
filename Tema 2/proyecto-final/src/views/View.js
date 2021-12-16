@@ -1,3 +1,5 @@
+import { BookFromGoogle } from "../models/BookFromGoogle"
+
 export class View {
     $(selector) {
         return document.querySelector(selector)
@@ -17,11 +19,23 @@ export class View {
     createH2() { return document.createElement('h2') }
     createH3() { return document.createElement('h3') }
 
+    /**
+     * Controla la aparición y desaparición del backdrop
+     * 
+     */
     toggleBackdrop() {
         let backdrop = this.$('.backdrop');
         console.log(backdrop)
         backdrop.classList.toggle('ocultar');
     }
+    /**
+     * Controla la desapación o aparición del modal de información extra
+     * En el caso de que el modal no esté activo, se activa, pues element 
+     * se refiere al elemento a activar. 
+     * Si está activa, se desactiva el ÚNICO elemento que tiene la clase extra-info-card-move (es decir, el elemento activo)
+     * @param {boolean} active 
+     * @param {HTMLElement} element 
+     */
     toggleExtraInfoCard(active = false, element = '') {
         let extraCardInfo = active ? this.$('.extra-info-card-move') : element;
         extraCardInfo.classList.toggle('extra-info-card-move');
@@ -36,7 +50,12 @@ export class View {
     }
 
 
-
+    /**
+     * Crea las estrellas de valoración del libro
+     * @param {Float} stars 
+     * @param {number} ratingsCount 
+     * @returns 
+     */
     createAverageRatingStars(stars = 0, ratingsCount = 0) {
         // <i class="far fa-star"></i>
         // <i class="fas fa-star"></i>
@@ -45,6 +64,7 @@ export class View {
         div.classList.add('average-rating-stars');
         let parteEntera = parseInt(stars);
         let numeroEstrellasPintadas = 0;
+        //pintamos las estrellas completas
         for (let i = 0; i < parteEntera; i++) {
             div.append(this.createStar('fas', 'fa-star'));
             numeroEstrellasPintadas++;
@@ -65,18 +85,24 @@ export class View {
 
         let resto = 5 - numeroEstrellasPintadas;
         
-    
+        //pintamos el resto de estrellas
         for (let i = 0; i < resto; i++) {
             div.append(this.createStar('far', 'fa-star'))
         }
 
         let p = this.createParagraph();
+        //pintamos el número de valoraciones del libro
         p.textContent = `(${ratingsCount})`;
         p.style.display = 'inline-block'
         div.append(p)
         return div;
     }
-
+    /**
+     * Crea el Card del libro en cuestión
+     * =>Necesaria la refactorización en componentes
+     * @param {BookFromGoogle} book 
+     * @returns 
+     */
     createBookCard(book) {
         console.log(book)
         let volumeInfo = book.volumeInfo;
@@ -94,6 +120,7 @@ export class View {
         let title = this.createParagraph();
         let author = this.createParagraph();
         let defaultImage = '';
+        //si la imagen viene nula se le pone una por defecto!
         if (!imageLinks) {
             defaultImage = 'https://food-rating.com/static/img/image-not-available.png';
         }
@@ -111,13 +138,19 @@ export class View {
 
 
     }
+    //intento fallido 
     cleanDescription(description = ''){
         
        
         return description;
     }
 
-    //función de paginacion
+    /**
+     * Pinta el botón de paginación con el caracter correspondiente (flecha o icono)
+     * @param {string} name 
+     * @param {*} className 
+     * @returns 
+     */
     paginationButton(name, className = ''){
         let button = this.createButton();
         button.classList.add('btn-pagination')
@@ -136,6 +169,11 @@ export class View {
         }
         return button;
     }
+    /**
+     * Pintamos el control de paginación
+     * @param {Array(BookFromGoogle)} books 
+     * @returns 
+     */
     paginateSearch(books){
         const numberOfBooks = books.length;
         console.log(numberOfBooks);
@@ -159,7 +197,17 @@ export class View {
         return control;
     }
 
-
+    /**
+     * Recibe un BookFromGoogle como primer parámetro ya que sus datos será los necesarios para pintar el card de información extra
+     * La función necesita los otros dos parámetros -opcionales- porque esta también es utilizada para renderizar el extra card
+     * de los libros buscados
+     * El último parámetro se utiliza para NO pintar el botón de AÑADIR A PENDIENTES en búsqueda de libros
+     * en el caso de que el selfLink exista en Firebase
+     * @param {BookFromGoogle} book 
+     * @param {Boolean} isSearched 
+     * @param {Array BookFromGoogle} storedBooks 
+     * @returns {HTMLElement}
+     */
     //esta función se debe separar en los componentes internos
     createExtraBookCard(book, isSearched = true, storedBooks = []) {
         // console.log(book)
@@ -232,14 +280,15 @@ export class View {
         //
         let divBtnControl = this.createDiv();
         divBtnControl.classList.add('btnControl');
+        //SI EL LIBRO A RENDERIZAR PERTENECE A UNA BÚSQUEDA...
         if (isSearched) {
+            //buscamos si en storedBooks hay algún selfLink que coincida con el selflink del argumento book
             let exists = storedBooks.some(e => e.selfLink === book.selfLink);
-            
-
                 let btnAddToList = this.createButton();
                 let btnText = this.createParagraph();
-                btnText.textContent = 'El libro ya ha sido añadido a tu lista'
-                if(!exists){
+                btnText.textContent = 'El libro ya ha sido añadido a tu lista';
+                btnText.style.color = 'white';
+                if(!exists){ //si no existe se renderiza el botón de añadir a pendientes
                     btnAddToList.textContent = "Añadir a pendientes";
                     btnAddToList.setAttribute('data-selfLink', book.selfLink);
                     btnAddToList.classList.add('btn-firebase')
@@ -249,11 +298,12 @@ export class View {
                     divBtnControl.append(btnText);
                 }
            
-            // extraCard.append(btnAddToList);
+            
         } else { //Información mostrada cuando YA lo tenemos en PENDIENTE o en LEIDO
             //se captura la propiedad read
             let read = book.read;
             //si el libro no está leido...
+            //SE PODRÍA HACER CON UN TERNARIO PERO NO TENÍA GANAS DE PENSAR NADA
             if (!read) {
                 let btnRead = this.createButton();
                 btnRead.textContent = 'He leído el libro';
@@ -273,24 +323,23 @@ export class View {
         btnRead.setAttribute('href', book.accessInfo.webReaderLink);
         btnRead.setAttribute('target', '__blank')
         btnRead.classList.add('btn-read')
-        btnRead.textContent = 'Leer ONLINE'
-        divBtnControl.append(btnRead);
+        //si hay un link de lectura...
+        if(book.accessInfo.webReaderLink){
+            btnRead.textContent = 'Leer ONLINE'
+            divBtnControl.append(btnRead);
+
+        }
         extraCard.append(divBtnControl);
-
-        // let btnPdf = document.createElement('a');
-        // btnPdf.setAttribute('href', book.accessInfo.pdf.acsTokenLink);
-        // btnPdf.setAttribute('target', '__blank')
-        // btnPdf.textContent = 'Leer ONLINE'
-        // extraCard.append(btnPdf)
-
-
         return extraCard;
 
 
     }
 
 
-
+        /**
+         * @deprecated
+         * @param {*} booksFromGoogle 
+         */
     renderSearch(booksFromGoogle) {
         let searchContainer = this.$('.contenedor-busqueda');
         searchContainer.textContent = '';
@@ -386,10 +435,11 @@ export class View {
         //searchContainer.parentElement.append(this.paginateSearch(booksFromGoogle))
     }
     /**
-     * 
-     * @param {*} searchedBooks =>Elementos que quiero mostrar en la paginación
-     * @param {*} number => Número de elementos en paginación
-     * @param {*} storedBooks => no hacer caso
+     * Paginamos el resultado de búsqueda, generando 10 elementos por página. Esta misma función servirá
+     * para controlar la paginación, ya que al pinchar en los botones podemos ir renderizando la página siguiente o anterior...
+     * @param {Array(BookFromGoogle)} searchedBooks =>Elementos que quiero mostrar en la paginación
+     * @param {Number} number => Número de elementos en paginación
+     * @param {Array(BookFromGoogle)} storedBooks
      */
     renderSearchedBooksWithPagination(searchedBooks, number = 10, storedBooks = []){
         let searchContainer = this.$('.contenedor-busqueda');
@@ -402,6 +452,12 @@ export class View {
         }
         //searchContainer.parentElement.append(this.paginateSearch(searchedBooks));
     }
+    /**
+     * Renderiza un libro que VAYA a ser almacenado en FIREBASE (NO LEIDOS)
+     * Renderiza un libro que haya cambiado su estado de lectura (Cambia de NO LEIDOS a LEIDOS y viceversa)
+     * @param {BookFromGoogle} bookFromGoogle 
+     * @param {Boolean} read 
+     */
     renderStoredBook(bookFromGoogle, read = false) {
         let pendientes = this.$(`${!read ? ".contenedor-pendientes-render" : ".contenedor-leidos-render"}`);
         let bookCardContainer = this.createBookCard(bookFromGoogle);
@@ -411,7 +467,5 @@ export class View {
 
     }
 
-    renderStoredBooksWithPagination(booksFromGoogle, number = 10){
-        
-    }
+   
 }
