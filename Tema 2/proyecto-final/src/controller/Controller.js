@@ -74,7 +74,7 @@ export class Controller {
     async getGoogleBooksFromFirebase() {
         /**
          * 
-         *Función que realiza la petición de todos los lirbos de firebase, devolviendo la lista de BookFromGoogle
+         *Función que realiza la petición de todos los libros de firebase, devolviendo la lista de BookFromGoogle
          * Unicamente es llamada cuando la App se inicia
          * @returns {BookFromGoogle} devuelve un objeto BookFromGoogle con los datos añadidos de firebase
          */
