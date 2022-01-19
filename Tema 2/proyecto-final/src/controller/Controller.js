@@ -19,7 +19,7 @@ export class Controller {
      * @param {String} book 
      * @returns Array{BookFromGoogle}
      */
-   
+
     async searchBook(book) {
         //generamos el resultSet de la petición a la API de Google (40 items max)
         let resultSet = await HttpRequest.httpGet(false, book);
@@ -44,7 +44,7 @@ export class Controller {
         // console.log(busqueda.children.length)
 
         //eliminamos la barra de búsqueda en el caso de que exista
-        if(busqueda.children.length !== 3){
+        if (busqueda.children.length !== 3) {
             document.querySelector('.pagination-control').remove();
         }
         //generamos el resultSet (40 items) tras pedir datos a la API de Google
@@ -116,7 +116,7 @@ export class Controller {
         this.booksFromGoogle.push(bookFromGoogle);
         //RENDERIZAMOS EL LIBRO
         this.view.renderStoredBook(bookFromGoogle);
-        
+
     }
     /**
      * Aunque la función se llame changeReadStatus, a parte setea la fecha de lectura
@@ -155,8 +155,10 @@ export class Controller {
      * Carga Todos los libros de firebase y renderiza los leídos y no leídos
      */
     async init() {
-        //cargamos la data
+
         await this.getGoogleBooksFromFirebase();
+
+        //cargamos la data
         //cargamos los libros leidos y pendientes
         this.view.renderBooks(this.filterBooksByReadStatus(false), false);
         this.view.renderBooks(this.filterBooksByReadStatus(true), false, true);

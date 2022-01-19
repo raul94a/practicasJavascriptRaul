@@ -11,7 +11,28 @@ const $ = selector => document.querySelector(selector);
 //instanciamos el controlador
 let controlador = new Controller();
 //cargamos los datos!
-await controlador.init()
+let body = document.querySelector('body');
+let div = document.createElement('div');
+setTimeout(async () => {
+    div.textContent = 'BooksApp - Encuentra el libro que quieras'
+    div.classList.add('tracking-in-expand');
+    let p = controlador.view.createParagraph();
+   
+    p.textContent = 'Cargando';
+    p.style.color = 'white';
+    div.append(p);
+   
+    body.children[1].after(div);
+    
+    
+    setTimeout(async () => {
+        await controlador.init()
+        div.remove()
+    }, 1000);
+
+    
+}, 1000);
+
 
 
 const searchButton = $('#btnBuscar');
@@ -34,8 +55,8 @@ const nav = $('nav');
  * @param {View} view 
  * */
 
- 
-const delayApp = (paragraphText, firstMessage, secondMessage, extraCardInfo,target, view) => {
+
+const delayApp = (paragraphText, firstMessage, secondMessage, extraCardInfo, target, view) => {
     let p = view.createParagraph();
     p.style.color = 'white';
     p.textContent = paragraphText
@@ -62,7 +83,7 @@ const selectContainer = (target) => {
     let children = $('.contenedor-principal').children;
     let array = Array.from(children).slice(1);
     console.log(array)
-    
+
     const map = { "leidos": "contenedor-leidos", "pendientes": "contenedor-pendientes", "busqueda": "busqueda" };
     //seleccionamos la classList del elemento que NO está oculto...
     let activeClass = array.filter(el => !el.classList.contains('ocultar'))[0].classList[0]
@@ -102,10 +123,10 @@ searchButton.addEventListener('click', async function () {
 /**
  * Control de paginación, permite cambiar de página
  */
-busqueda.addEventListener('click', function(e){
+busqueda.addEventListener('click', function (e) {
     const target = e.target;
-   // console.log(target);
-    if(target.parentElement.classList.contains('pagination-control')){
+    // console.log(target);
+    if (target.parentElement.classList.contains('pagination-control')) {
         //alert(target.textContent);
         //console.log(target.textContent)
         let page = parseInt(target.textContent);
@@ -134,12 +155,12 @@ searchContainer.addEventListener('click', async function (e) {
         //console.log(extraCardInfo)
         view.toggleBackdrop();
         view.toggleExtraInfoCard(false, extraCardInfo);
-//controla el post del libro que le ha gustado al usuario a FIREBASE
+        //controla el post del libro que le ha gustado al usuario a FIREBASE
     } else if (classList.contains('btn-firebase')) {
         const selfLink = target.getAttribute('data-selfLink');
         await controlador.postBookToFirebase(selfLink);
         let extraCardInfo = target.closest('.extra-info-card-move')
-        delayApp('Guardando libros en pendientes...','El libro ya ha sido añadido a la lista de pendientes', 'LISTO!', extraCardInfo, target, view)
+        delayApp('Guardando libros en pendientes...', 'El libro ya ha sido añadido a la lista de pendientes', 'LISTO!', extraCardInfo, target, view)
 
         //Pasar el libro a LEIDOS
     } else if (classList.contains('btnReadBook')) {
