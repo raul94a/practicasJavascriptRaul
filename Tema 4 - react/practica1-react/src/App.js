@@ -3,6 +3,8 @@ import './App.css';
 import Header from './components/Header';
 import Content from './components/Content';
 import Total from './components/Total';
+import FormCustom from './components/FormCustom';
+
 const course = 'Half Stack application development';
 const part1 = 'Fundamentals of React';
 const exercises1 = 10
@@ -29,16 +31,19 @@ const contentInfo = {
   ],
   total: suma
 };
+
 function App() {
   return (
-    <>
+  
       <div>
         <Header course={contentInfo.name} />
         <Content parts={contentInfo.parts} />
         <Total suma={contentInfo.total} />
+        <FormCustom />
       </div>
-    </>
+  
   );
 }
 
 export default App;
+
