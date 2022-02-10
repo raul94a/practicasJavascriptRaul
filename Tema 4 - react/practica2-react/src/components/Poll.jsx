@@ -1007,6 +1007,8 @@ const Poll = (props) => {
 
     const filteredMock = datosMock.filter(mock => mock.country.toLowerCase() == 'spain')
 
+
+
     const data = { good: 0, neutral: 0, bad: 0 }
 
     const [dataPoll, setDataPoll] = useState(data)
@@ -1053,6 +1055,19 @@ const Poll = (props) => {
                 <p>Neutral: {neutral}</p>
                 <p>Total: {total}</p>
                 <p>Average: {isNaN(average) ? 'No hay datos' : average > 0  ? (average * 100).toFixed(2) + '%' : '0%'}</p>
+            </div>
+            <div>
+                <button onClick={() => {
+                    localStorage.setItem('good', good);
+                    localStorage.setItem('bad', bad)
+                    localStorage.setItem('neutral', neutral)
+                }}>Save</button>
+                <button onClick={() => {
+                    let goodStorage = +localStorage.getItem('good')
+                    let badStorage = +localStorage.getItem('bad')
+                    let neutralStorage = +localStorage.getItem('neutral')
+                    setDataPoll(previous => ({good: goodStorage, bad: badStorage, neutral:neutralStorage}))
+                }}>load</button>
             </div>
             <div>
                 {datosMock.filter(data => data.email.toLowerCase().endsWith('.gov')  && data.gender.toLowerCase() === 'non-binary').map(({id,first_name, country})=>{
