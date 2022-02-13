@@ -82,9 +82,13 @@ function App() {
     let nota = notas.filter(nota => nota.id == id)[0];
     nota.color = color;
     setNotas((prev) => [...notas])
-
   }
-
+  const notasFunctions = {
+    onChangeInputHandler : onChangeInputHandler,
+    onChangeTituloHandler: onChangeTituloHandler,
+    onChangeColor: onChangeColor,
+    setNotas: setNotas
+  }
   return (
     <div className='app-body' onClick={(event) => onClickAppBody(event)}>
       <MainHeader />
@@ -94,7 +98,7 @@ function App() {
         <FormActions active={activeForm} />
         {activeForm && <button onClick={onClickButton}>Añadir nota</button>}
       </AddForm>
-      <NotasSection notas={notas} onChangeColor={onChangeColor} />
+      <NotasSection notas={notas} notasFunctions={notasFunctions} />
     </div>
   );
 }
