@@ -6,6 +6,7 @@ import Input from './components/form/Input';
 import MainHeader from './components/header/MainHeader';
 import NotasSection from './components/nota/NotasSection'
 
+
 function App() {
   const mock = [
     {
@@ -41,6 +42,21 @@ function App() {
   const [inputTituloValue, setInputTituloValue] = useState('')
   const [activeForm, setActiveForm] = useState(false)
   const [notas, setNotas] = useState([...mock]);
+  const [pickColor, setPickColor] = useState(false);
+  const [color, setColor] = useState('white')
+
+
+  const onPickColor = e => {
+    setColor(e.target.classList[0]);
+    onHideColorPicker()
+
+  }
+
+  const onClickColorPicker = () => {
+    setPickColor(!pickColor)
+  }
+
+  const onHideColorPicker = () => setPickColor(false)
 
   const onChangeInputHandler = (event) => {
     setInputNotaValue(event.target.value);
@@ -57,6 +73,7 @@ function App() {
 
     if (event.target.className.includes('app-body')) {
       setActiveForm(false)
+      onHideColorPicker()
     }
   }
 
@@ -66,10 +83,11 @@ function App() {
       id: Math.random(),
       title: inputTituloValue,
       content: inputNotaValue,
-      color: 'white',
+      color: color,
       className: 'nota-div'
     }
     setNotas(previous => [...previous, nota]);
+    setColor('white');
     setInputNotaValue('');
     setInputTituloValue('')
     console.log(notas);
@@ -95,8 +113,12 @@ function App() {
       <AddForm >
         <Input placeHolder='Título' className='add-form-input-titulo' value={inputTituloValue} onChangeHandler={onChangeTituloHandler} active={activeForm} />
         <Input placeHolder='Añade una nota...' className='add-form-input-nota' value={inputNotaValue} onChangeHandler={onChangeInputHandler} active={true} onFocusHandler={onFocusHandler} />
-        <FormActions active={activeForm} />
+        <FormActions active={activeForm} pickColor={onClickColorPicker}/>
+        {pickColor && <section className="notas-options">
+                {['white', 'blue', 'red', 'green', 'yellow', 'pink'].map(colour => <div className={`${colour} color-box`} onClick={(e)=>onPickColor(e)}></div>)}
+            </section>}
         {activeForm && <button onClick={onClickButton}>Añadir nota</button>}
+        
       </AddForm>
       <NotasSection notas={notas} notasFunctions={notasFunctions} />
     </div>

@@ -4,7 +4,7 @@ import AddForm from '../form/AddForm';
 import FormActions from '../form/FormActions';
 import Input from '../form/Input';
 import './NotaModal.css'
-import { useState } from "react";
+import { useState,useRef } from "react";
 
 
 

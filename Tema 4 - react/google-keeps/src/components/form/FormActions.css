@@ -3,3 +3,10 @@
     flex-direction: row;
     justify-content: space-evenly;
 }
+
+.form-actions svg{
+    width:20px;
+}
+.form-actions svg:hover{
+    cursor: pointer;
+}
