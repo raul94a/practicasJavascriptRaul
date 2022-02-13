@@ -11,3 +11,20 @@
     /* min-height: 100px; */
     padding:1rem;
 }
+
+.add-form button{
+    padding: 0.5rem ;
+    border: none;
+    border-radius: 15px;
+    background: linear-gradient(rgb(81, 146, 184),rgb(50,120,222));
+    font-size: 0.95rem;
+    font-weight: bold;
+    color: white;
+}
+.add-form button:hover{
+   
+    background: linear-gradient(rgb(50,120,222),rgb(18, 49, 66));
+    
+    cursor: pointer;
+}
+

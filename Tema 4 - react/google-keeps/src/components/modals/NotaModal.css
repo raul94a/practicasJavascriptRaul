@@ -1,0 +1,12 @@
+#modal form{
+    width: 50%;
+    position: absolute;
+    z-index: 100;
+    background-color: white;
+   
+    left:50%;
+    top:25%;
+    margin-left:-25%
+ 
+
+}

@@ -7,3 +7,12 @@
     outline: none;
     
 }
+.add-form-input-titulo::placeholder{
+    font-weight: bold;
+    color: rgb(3, 3, 3);
+    font-size: 1.1rem;
+}
+.add-form-input-nota::placeholder{
+    color: grey;
+    font-size: 0.9rem;
+}
