@@ -1,0 +1,13 @@
+import './AddForm.css'
+
+const AddForm = ({ children }) => {
+    return (
+        <form className="add-form">
+            {/* <input type="text" placeholder="Título" className="add-form-input-titulo" onChange={onChangeTitulo}></input>
+            <input type="text" placeholder='Añade una nota...' className="add-form-input-añadir" onChange={onChangeHandler} value={value}></input>
+            <button onClick={onClickButton}>Click</button> */}
+            {children}
+        </form>
+    )
+}
+export default AddForm

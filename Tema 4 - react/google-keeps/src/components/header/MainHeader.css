@@ -1,0 +1,12 @@
+html,body,h1{margin:0}
+.main-header{
+    min-height: 2%;
+    height: 65px;
+    width: 100vw;
+    box-shadow: 1px 1px 9px 1px rgba(3,5,12,0.885);
+    background-color: red;
+}
+.main-header h1{
+    text-align: center;
+    line-height: 65px;
+}
