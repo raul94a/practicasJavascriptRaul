@@ -11,6 +11,7 @@ import { useState,useRef } from "react";
 const OverlayModal = ({nota, notas, onSetNotas, onHideBackdrop}) => {
     const [modTituloValue, setModTituloValue] = useState(nota.title)
     const[modContentValue, setModContentValue] = useState(nota.content)
+    const [modCategoryValue, setModCategoryVaue] = useState(nota.category)
 
     const onChangeModTituloValue = event => {
         setModTituloValue(event.target.value)

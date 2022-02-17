@@ -3,7 +3,7 @@
     flex-direction: column;
     min-width: 300px;
     width: 35%;
-    margin: 0 auto;
+   
     margin-top:3%;
     border: 1px solid transparent;
     border-radius: 15px;
@@ -30,4 +30,9 @@
 
 .add-form section{
     margin-bottom: 5%;
+}
+
+.flex-row-between{
+    display: flex;
+    justify-content: space-between;
 }
