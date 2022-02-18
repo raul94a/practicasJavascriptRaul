@@ -1,0 +1,207 @@
+.active-backdrop{
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    z-index:5;
+    background-color: rgba(5, 5, 5, 0.85);
+}
+
+.modal-active{
+    position: absolute;
+    z-index: 6;
+    top:0;
+    left: 0;
+
+    width: 40%;
+    height: auto;
+    background-color: white;
+}
+.book-card::-webkit-scrollbar{
+    display: none;
+}
+
+.book-card img {
+    width: 270px;
+    height: 325px;
+   
+    object-fit: fill;
+}
+.book-card img:hover{
+    filter: brightness(50%);
+}
+
+.book-card-info {
+  
+    width: 100%;
+    transition: all 4s ease;
+ 
+    
+}
+.book-card-info:hover{
+    box-shadow: 5px -10px blue;
+}
+
+
+.book-card-info p {
+    width: 90%;
+    color:black;
+    padding: 0.65rem;
+ 
+}
+
+.extra-info-card {
+    display: block;
+    border: 1px solid transparent;
+    border-radius: 20px;
+    padding: 1rem;
+    position: absolute;
+    /* width: 50%; */
+    top: 0;
+}
+
+.extra-info-card-move {
+    padding: 1rem;
+    border-image: url("https://i.stack.imgur.com/sjbeu.png") 100 10 repeat;
+    background: #0f0c29;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #24243e, #302b63, #0f0c29);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #24243e, #302b63, #0f0c29); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    z-index: 10;
+    /* top: 10px; */
+    /* width: 50rem; */
+    width: 80%;
+    
+    outline: 5px ridge rgba(1, 41, 68, 0.93);
+    /* outline-offset: 10px; */
+    box-shadow: 0px 10px 34px 22px rgba(105, 105, 105, 1);
+    animation: mymove 2s forwards;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.extra-info-card> * {
+    color:white;
+}
+
+#extra-card-description{
+    z-index:20;
+    
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 1.8rem;
+    text-shadow: 3px -5px rgba(6, 2, 7, 0.575);
+    
+}
+#extra-card-description + p{
+    text-align: justify;
+    width: 65%;
+    margin: 0 auto;
+    column-gap: 50px;;
+    padding:1rem;
+   
+}
+#extra-card-description + p.center-p{
+    text-align: center;
+}
+
+
+.extra-info-card>p {
+    padding: 0.5rem;
+    text-align: justify;
+}
+
+
+@keyframes mymove {
+    from {
+        top: 0px;
+        left: 0px;
+    }
+
+    to {
+        top: calc(100vh / 2 - 40%)
+    }
+
+    from {
+        left: 0px;
+    }
+
+    to {
+        left: calc(100vw - 93.5vw - 8px);
+    }
+}
+
+/*ESTRELLAS*/
+/*
+// <i class="far fa-star"></i>
+// <i class="fas fa-star"></i>
+// <i class="fas fa-star-half-alt"></i>
+*/
+
+.fa-star,
+.fa-star-half-alt {
+    color: rgb(229, 255, 0);
+    padding: 0.1rem;
+    -webkit-text-stroke: 1px rgb(0, 0, 0);
+
+}
+/*
+
+BOTONES
+*/
+.btn-firebase,
+.btnReadBook,
+.btnReadBook-remove{
+	box-shadow: 0px 1px 0px 0px #f0f7fa;
+	background:linear-gradient(to bottom, #33bdef 5%, #019ad2 100%);
+	background-color:#33bdef;
+	border-radius:6px;
+	border:1px solid #057fd0;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:0px -1px 0px #5b6178;
+}
+.btn-firebase:hover {
+	background:linear-gradient(to bottom, #019ad2 5%, #33bdef 100%);
+	background-color:#019ad2;
+}
+.btn-firebase:active {
+	position:relative;
+	top:1px;
+}
+.btnControl{
+    width: 50%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    /* border: 1px solid white; */
+
+}
+
+.btn-read {
+    margin-top:1%;
+	box-shadow:inset 0px 39px 0px -24px #e67a73;
+	background-color:#e4685d;
+	border-radius:4px;
+	border:1px solid #ffffff;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	padding:6px 50px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #b23e35;
+}
+.btn-read:hover {
+	background-color:#eb675e;
+}
+.btn-read:active {
+	position:relative;
+	top:1px;
+}

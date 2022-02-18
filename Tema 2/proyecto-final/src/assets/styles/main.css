@@ -137,7 +137,7 @@ p {
 .book-card {
     width: 250px;
     -webkit-box-shadow: 9px -7px 15px 0px rgba(146, 146, 146, 0.98);
-    box-shadow: 9px -7px 10px 0px rgba(146, 146, 146, 0.98);
+    box-shadow: 9px 3px 10px 1px rgba(146, 146, 146, 0.98);
     height: 450px;
     overflow-y: auto;
     border-bottom-left-radius: 40px;

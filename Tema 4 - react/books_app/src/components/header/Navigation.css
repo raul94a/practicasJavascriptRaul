@@ -1,0 +1,28 @@
+nav {
+    max-width: 70%;
+    width: 65%;
+    border: 1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+nav button {
+    border: none;
+    padding: 1rem;
+    background-color: transparent;
+    color: black;
+    border-radius: 25px;
+    font-size: 1.3rem;
+    font-weight: 450;
+    transition: all 400ms ease-in-out;
+}
+
+nav button:hover {
+    border: 2px solid rgb(50, 47, 155);
+    background: rgba(44, 44, 145, 0.932);
+    color: white;
+    text-decoration-color: white;
+    text-decoration: underline;
+    box-shadow: 4px 5px 10px 2px rgb(32, 32, 46);
+}

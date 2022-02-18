@@ -1,0 +1,82 @@
+.header-extra-card {
+    width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-around;
+    margin-bottom: 2%;
+}
+
+
+.left-header-extra-card {
+    /* height: 100%; */
+    /* border:1px solid black; */
+    width: 30%;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* flex-grow: initial; */
+    flex-shrink: 1;
+    flex-wrap: wrap;
+}
+
+.extra-card-book-info {
+
+    display: flex;
+    flex-direction: column;
+
+}
+
+.extra-card-book-info>* {
+    color: white;
+}
+
+.average-rating-stars p {
+    color: white;
+}
+
+.left-header-extra-card img {
+    width: 220px;
+    height: 250px;
+    margin-bottom: 3%;
+}
+
+.left-header-extra-card>* {
+    color: white;
+}
+
+.right-header-extra-card {
+
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    flex-shrink: 2;
+}
+
+.right-header-extra-card>* {
+    color: white;
+}
+
+.right-header-extra-card>* {
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.right-header-extra-card h1 {
+    font-size: 2.2rem;
+}
+
+.right-header-extra-card h2 {
+    font-size: 1.5rem;
+}
+
+.right-header-extra-card h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.right-header-extra-card p {
+    padding: 0.3rem;
+    font-size: 0.9rem;
+}
