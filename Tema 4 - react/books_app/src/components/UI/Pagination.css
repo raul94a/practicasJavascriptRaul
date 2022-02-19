@@ -1,0 +1,39 @@
+.pagination{
+    position: relative;
+    width: 98%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    margin:1% 0 1% 0;
+}
+
+.pagination button{
+    /* position:  ; */
+    width: 50px;
+    margin: 0 5px 0 5px;
+    height: 50px;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 3px 2px 4px 1px black;
+    color: white;
+    background:linear-gradient(rgba(55,55,155,1),rgba(43,43,88,0.9));
+   
+}
+
+.pagination .actual-page::before{
+    position: absolute;
+    z-index:5;
+    content: '';
+    top: 0;
+    margin-left:-20px;
+    width:48px;
+    height: 10px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    background-color: rgba(43,43,88,0.9)
+}
+
+.pagination button:hover{
+    cursor: pointer;
+    background:linear-gradient(rgba(43,43,88,0.9),rgba(55,55,155,1));
+}

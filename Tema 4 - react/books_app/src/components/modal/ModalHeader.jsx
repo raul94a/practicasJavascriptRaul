@@ -1,7 +1,8 @@
 import './ModalHeader.css'
 import noimage from '../../assets/img/noimage.png'
+import Rating from '../UI/Rating';
 const ModalHeader = ({volumeInfo}) => {
-    const {imageLinks, publishedDate, title, authors, categories, pageCount} = volumeInfo;
+    const {imageLinks, publishedDate, title, authors, categories, pageCount, averageRating, ratingsCount} = volumeInfo;
     let hasImageLinks = imageLinks ? true : false;
     let hasSmallThumbnail = hasImageLinks ? imageLinks['smallThumbnail'] ? true : false : false
     return (
@@ -18,7 +19,10 @@ const ModalHeader = ({volumeInfo}) => {
                     <p>{categories[0]}</p>
                     <p>Número de páginas: {pageCount}</p>
                     <section className="average-rating-stars">
+
+                        <Rating averageRating={averageRating} ratingsCount={ratingsCount}/>
                     </section>
+                    
                 </div>
             </article>
         </section>

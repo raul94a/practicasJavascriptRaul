@@ -67,7 +67,7 @@ class HttpRequest {
      * 
      * Internamente, la función añade a la instancia de Book pasada por referencia la clave generada por Firebase
      * al realizar la inserción en el endpoint de libros.
-     * @param {Book} book 
+     * @param {FirebasecitoniBook} book 
      */
     static async postToFirebase(book) {
         let url = `https://booksapp-7847c-default-rtdb.europe-west1.firebasedatabase.app/libros.json`;
@@ -97,7 +97,7 @@ class HttpRequest {
      */
     static async changeReadStatus(firebaseId, isRead = false) {
         let url = `https://booksapp-7847c-default-rtdb.europe-west1.firebasedatabase.app/libros/${firebaseId}/read.json`;
-        let readStatus = isRead ? false : true;
+      
         const promise = new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();
             xhr.open('PUT', url);
@@ -110,7 +110,7 @@ class HttpRequest {
                 // book.firebaseId = xhr.response['name']
             };
 
-            xhr.send(JSON.stringify(readStatus));
+            xhr.send(JSON.stringify(isRead));
         })
         return promise;
     }
@@ -121,12 +121,12 @@ class HttpRequest {
      * @param {boolean} read 
      * @returns promesa 
      */
-    static async setReadingDate(firebaseId, read) {
+    static async setReadingDate(firebaseId, book) {
         let url = `https://booksapp-7847c-default-rtdb.europe-west1.firebasedatabase.app/libros/${firebaseId}/readDate.json`;
         const promise = new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();
             xhr.open('PUT', url);
-
+            book.readDate = book.read ?  new Date().toLocaleString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' }) : ""
             xhr.responseType = 'json';
 
             xhr.onload = function () {
@@ -135,7 +135,7 @@ class HttpRequest {
                 // book.firebaseId = xhr.response['name']
             };
 
-            xhr.send(JSON.stringify( read ? new Date().toLocaleString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' }) : ""));
+            xhr.send(JSON.stringify(book.readDate));
         })
         return promise;
     }

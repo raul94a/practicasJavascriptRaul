@@ -13,6 +13,7 @@ export class BookFromGoogle {
         this.volumeInfo = new VolumeInfoFromMap(map['volumeInfo'])
         this.accessInfo = new AccessInfoFromMap(map['accessInfo'])
         this.saleInfo = new saleInfoFromMap(map['saleInfo'])
+        console.log(this.volumeInfo, this.accessInfo)
     }
     /**
      * Permite añadir la información que guardo en Firebase acerca de cada libro a la info que proporciona la API de Google
@@ -25,6 +26,9 @@ export class BookFromGoogle {
         this.readDate = book.readDate
         this.firebaseId = book.firebaseId
         this.rating = book.rating;
+    }
+    changeReadStatus(){
+        this.read = !this.read
     }
 }
 class VolumeInfoFromMap {

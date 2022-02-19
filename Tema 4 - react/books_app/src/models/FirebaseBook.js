@@ -1,5 +1,5 @@
 //clase de inserción y retirada de datos en FIREBASE!
-export class Book {
+class FirebaseBook {
     constructor(
         selfLink,
         addedDate = new Date().toLocaleString('es-ES', { day: "numeric", month: '2-digit', year: 'numeric' }),
@@ -24,10 +24,11 @@ export class Book {
     static createBookFromFirebase(map, firebaseId){
         // console.log(map)
         // console.log(map['addedDate'])
-        let book = new Book(map['selfLink'], map['addedDate'], map['readDate'], map['read'], map['rating']);
+        let book = new FirebaseBook(map['selfLink'], map['addedDate'], map['readDate'], map['read'], map['rating']);
         book.firebaseId = firebaseId;
         
         return book;
     }
 }
 
+export default FirebaseBook
