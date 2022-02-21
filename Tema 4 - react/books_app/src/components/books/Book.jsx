@@ -1,9 +1,9 @@
 import './Book.css'
 import  {BookModal} from '../modal/BookModal'
-import { useState } from 'react';
+import { useState} from 'react';
 import noimage from '../../assets/img/noimage.png'
 
-const Book = ({ book,userBooks, addBook, fromSearch = true }) => {
+const Book = ({ book, fromSearch = true }) => {
     const [activeModal, changeModalStatus] = useState(false);
    
 
@@ -11,18 +11,20 @@ const Book = ({ book,userBooks, addBook, fromSearch = true }) => {
     let hasImageLinks = imageLinks ? true : false;
     let hasSmallThumbnail = hasImageLinks ? imageLinks['smallThumbnail'] ? true : false : false
     const { volumeInfo } = book;
+
+    
     return (
-        <>
-            {activeModal && <BookModal onClick={changeModalStatus} book={book} userBooks={userBooks} addBook={addBook} fromSearch={fromSearch} />}
+       <>
+            {activeModal && <BookModal onClick={changeModalStatus} book={book} fromSearch={fromSearch} />}
             <section style={{ height: '475px', width: '275px' }} className='book-card' onClick={() => changeModalStatus(!activeModal)}>
-                <img src={hasSmallThumbnail ? imageLinks['smallThumbnail'] : noimage} alt='image' />
+                <img src={hasSmallThumbnail ? imageLinks['smallThumbnail'] : noimage} alt={`${book.volumeInfo.title} cover page`} />
                 <article className='book-card-info'>
                     <p>{volumeInfo.title}</p>
                     <p>{volumeInfo.authors}</p>
                 </article>
             </section>
-        </>
-
+        
+</>
     )
 
 }

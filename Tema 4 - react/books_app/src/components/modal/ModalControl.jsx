@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import FirebaseBook from '../../models/FirebaseBook'
 import HttpRequest from '../../services/HttpRequest';
 import './ModalControl.css'
-const ModalControl = ({ book, accessInfo, userBooks, addBook, fromSearch }) => {
-    let existsInUser = userBooks.find(bookIter => bookIter.selfLink === book.selfLink) ? true : false;
+import BookContext from '../../state/book-context';
+const ModalControl = ({ book, accessInfo, fromSearch }) => {
+    const bookContext = useContext(BookContext);
+    let existsInUser = bookContext.userBooks.find(bookIter => bookIter.selfLink === book.selfLink) ? true : false;
     const [isBookRegistered, changeResgisteredStatus] = useState(existsInUser)
     const [loadingPostToFirebase, changeLoadingPostToFirebaseStatus] = useState(false);
     
@@ -18,14 +20,14 @@ const ModalControl = ({ book, accessInfo, userBooks, addBook, fromSearch }) => {
                         setTimeout(() => {
                             changeLoadingPostToFirebaseStatus(false)
                             book.addFirebaseData(firebaseBook)
-                            addBook(book);
+                            bookContext.addBook(book);
                             // console.log(book)
                             changeResgisteredStatus(true)
                         }, 1000)
 
                     }
                 }>{loadingPostToFirebase ? 'Cargando...' : 'Añadir a pendientes'}</button>}
-                {accessInfo.webReaderLink && <a href={accessInfo.webReaderLink} target="_blank" className="btn-leer-linea">Leer en línea</a>}
+                {accessInfo.webReaderLink && <a href={accessInfo.webReaderLink} target="_blank" rel="noreferrer" className="btn-leer-linea">Leer en línea</a>}
             </div>
         )
     }
@@ -39,13 +41,13 @@ const ModalControl = ({ book, accessInfo, userBooks, addBook, fromSearch }) => {
                     await HttpRequest.setReadingDate(book.firebaseId, book)
                     setTimeout(() => {
                         changeLoadingPostToFirebaseStatus(false)
-                        addBook(book, false);
+                        bookContext.addBook(book, false);
 
-                    }, 1000)
+                    }, 100)
 
                 }
             }>{loadingPostToFirebase ? 'Cargando...' : !book.read ? 'Pasar a leídos' : 'Pasar a pendientes de leer'}</button>
-            {accessInfo.webReaderLink && <a href={accessInfo.webReaderLink} target="_blank" className="btn-leer-linea">Leer en línea</a>}
+            {accessInfo.webReaderLink && <a href={accessInfo.webReaderLink} target="_blank" rel="noreferrer" className="btn-leer-linea">Leer en línea</a>}
         </div>
     )
 
