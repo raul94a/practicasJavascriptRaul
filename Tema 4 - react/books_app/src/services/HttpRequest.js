@@ -6,13 +6,15 @@ class HttpRequest {
      * @param {string} libro 
      * @returns devuelve el JSON con la lista de libros encontrados
      */
-    static async httpGet(isFirebaseRequest, libro = '') {
+    static async httpGet(isFirebaseRequest, libro = '', localId) {
         //poner tu api key de google!
         const key = 'AIzaSyDUmVoQie3zUY6ESE4lF94CU0qyV9oswS8';
+        // if(isFirebaseRequest && localId === '') return;
         //
+        console.log(localId);
         let url =
             isFirebaseRequest
-                ? 'https://booksapp-7847c-default-rtdb.europe-west1.firebasedatabase.app/libros.json'
+                ? `https://booksapp-7847c-default-rtdb.europe-west1.firebasedatabase.app/libros/${localId}.json`
                 : `https://www.googleapis.com/books/v1/volumes?q=${libro}&maxResults=40&key=${key}`;
         //vamos a declarar una promesa
         const promise = new Promise((resolve, reject) => {
@@ -21,7 +23,7 @@ class HttpRequest {
 
             xhr.responseType = 'json';
 
-            //cuando esta función termine, se resuelve la promesa y devuelve el resultado (JSON)
+            //cuando esta función termine, se resudfdsafsadfsadelve la promesa y devuelve el resultado (JSON)
             xhr.onload = function () {
                 resolve(xhr.response);
                 //console.log(xhr.status);
@@ -69,8 +71,8 @@ class HttpRequest {
      * al realizar la inserción en el endpoint de libros.
      * @param {FirebasecitoniBook} book 
      */
-    static async postToFirebase(book) {
-        let url = `https://booksapp-7847c-default-rtdb.europe-west1.firebasedatabase.app/libros.json`;
+    static async postToFirebase(book, localId) {
+        let url = `https://booksapp-7847c-default-rtdb.europe-west1.firebasedatabase.app/libros/${localId}.json`;
         //vamos a declarar una promesa
         const promise = new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();
@@ -88,6 +90,7 @@ class HttpRequest {
 
             xhr.send(JSON.stringify(book));
         })
+        return promise;
     }
     /**
      * cambia el estado de lectura del libro en cuestión, pasaándolo de leído a no leído y viceversa
@@ -95,8 +98,8 @@ class HttpRequest {
      * @param {boolean} isRead 
      * @returns 
      */
-    static async changeReadStatus(firebaseId, isRead = false) {
-        let url = `https://booksapp-7847c-default-rtdb.europe-west1.firebasedatabase.app/libros/${firebaseId}/read.json`;
+    static async changeReadStatus(firebaseId, isRead = false, localId) {
+        let url = `https://booksapp-7847c-default-rtdb.europe-west1.firebasedatabase.app/libros/${localId}/${firebaseId}/read.json`;
       
         const promise = new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();
@@ -121,8 +124,9 @@ class HttpRequest {
      * @param {boolean} read 
      * @returns promesa 
      */
-    static async setReadingDate(firebaseId, book) {
-        let url = `https://booksapp-7847c-default-rtdb.europe-west1.firebasedatabase.app/libros/${firebaseId}/readDate.json`;
+    static async setReadingDate(firebaseId, book, localId) {
+        let url = `https://booksapp-7847c-default-rtdb.europe-west1.firebasedatabase.app/libros/${localId}/${firebaseId}/readDate.json`;
+        console.log(url);
         const promise = new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();
             xhr.open('PUT', url);

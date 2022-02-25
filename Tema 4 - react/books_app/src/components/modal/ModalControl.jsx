@@ -8,23 +8,25 @@ const ModalControl = ({ book, accessInfo, fromSearch }) => {
     let existsInUser = bookContext.userBooks.find(bookIter => bookIter.selfLink === book.selfLink) ? true : false;
     const [isBookRegistered, changeResgisteredStatus] = useState(existsInUser)
     const [loadingPostToFirebase, changeLoadingPostToFirebaseStatus] = useState(false);
-    
+    const postBookToFirebase = async (book,localId) => {
+        changeLoadingPostToFirebaseStatus(true)
+        let firebaseBook = new FirebaseBook(book.selfLink)
+        await HttpRequest.postToFirebase(firebaseBook, localId);
+        setTimeout(() => {
+            changeLoadingPostToFirebaseStatus(false)
+            book.addFirebaseData(firebaseBook)
+            bookContext.addBook(book);
+            // console.log(book)
+            changeResgisteredStatus(true)
+        }, 1000)
+
+    }
     if (fromSearch) {
         return (
             <div className="btnControl">
                 {!isBookRegistered && <button disabled={loadingPostToFirebase} className="btn-firebase" onClick={
                     async () => {
-                        changeLoadingPostToFirebaseStatus(true)
-                        let firebaseBook = new FirebaseBook(book.selfLink)
-                        await HttpRequest.postToFirebase(firebaseBook);
-                        setTimeout(() => {
-                            changeLoadingPostToFirebaseStatus(false)
-                            book.addFirebaseData(firebaseBook)
-                            bookContext.addBook(book);
-                            // console.log(book)
-                            changeResgisteredStatus(true)
-                        }, 1000)
-
+                      await postBookToFirebase(book,bookContext.localId)
                     }
                 }>{loadingPostToFirebase ? 'Cargando...' : 'Añadir a pendientes'}</button>}
                 {accessInfo.webReaderLink && <a href={accessInfo.webReaderLink} target="_blank" rel="noreferrer" className="btn-leer-linea">Leer en línea</a>}
@@ -37,8 +39,9 @@ const ModalControl = ({ book, accessInfo, fromSearch }) => {
                 async () => {
                     changeLoadingPostToFirebaseStatus(true)
                     book.read = !book.read;
-                    await HttpRequest.changeReadStatus(book.firebaseId, book.read)
-                    await HttpRequest.setReadingDate(book.firebaseId, book)
+                    console.log(book)
+                    await HttpRequest.changeReadStatus(book.firebaseId, book.read, bookContext.localId)
+                    await HttpRequest.setReadingDate(book.firebaseId, book, bookContext.localId)
                     setTimeout(() => {
                         changeLoadingPostToFirebaseStatus(false)
                         bookContext.addBook(book, false);

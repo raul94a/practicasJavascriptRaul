@@ -11,7 +11,11 @@ const BackDrop = ({ onClick }) => {
     let heightClient = document.documentElement.clientHeight;
     console.log(height, heightClient)
 
-    return (<>{ReactDOM.createPortal(<div className='active-backdrop' onClick={() => onClick(false)} style={{ height: height === 0 ? heightClient : height }}></div>, document.getElementById('backdrop'))}</>)
+    return (<>{ReactDOM.createPortal(<div className='active-backdrop' onClick={() => {
+        onClick(false)
+    
+    }
+    } style={{ height: height === 0 ? heightClient : height }}></div>, document.getElementById('backdrop'))}</>)
 }
 
 
@@ -19,7 +23,7 @@ const BackDrop = ({ onClick }) => {
 const ModalOverlay = ({ book, fromSearch }) => {
     const { volumeInfo, accessInfo } = book;
     // console.log(book)
-    
+
     return (
         <div className="modal-active extra-info-card extra-info-card-move">
             <ModalHeader volumeInfo={volumeInfo} />
@@ -33,7 +37,7 @@ const ModalOverlay = ({ book, fromSearch }) => {
 
 
 const BookModal = ({ book, onClick, fromSearch }) => {
-   
+
     return (
         <>
             <BackDrop onClick={onClick} />
@@ -44,10 +48,11 @@ const BookModal = ({ book, onClick, fromSearch }) => {
 }
 
 const LoadingModal = (props) => {
+    let offsetHeight  = document.documentElement.offsetHeight;
     return (
         <>
             <BackDrop />
-            {ReactDOM.createPortal(<div className="tracking-in-expand" >
+            {ReactDOM.createPortal(<div className="tracking-in-expand" style={{height: `${offsetHeight}px`}} >
                 <h3>BooksApp</h3>
                 <h4>Organiza tu lectura de forma eficiente</h4>
             </div>, document.getElementById('modal'))}
@@ -56,4 +61,18 @@ const LoadingModal = (props) => {
         </>
     )
 }
-export { BookModal, LoadingModal }
+
+const ErrorModal = ({ onClick }) => {
+    return (
+        <>
+            <BackDrop onClick={onClick} />
+            {ReactDOM.createPortal(<div className="error-modal">
+                <h1>Ha ocurrido un error</h1>
+                <p>Alguno de sus datos no es correcto</p>
+                <button onClick={onClick}>Continuar</button>
+            </div>, document.getElementById('modal'))}
+        </>
+    );
+}
+
+export { BookModal, LoadingModal, ErrorModal }

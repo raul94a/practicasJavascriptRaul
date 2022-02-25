@@ -24,9 +24,10 @@ class FirebaseBook {
     static createBookFromFirebase(map, firebaseId){
         // console.log(map)
         // console.log(map['addedDate'])
+        
         let book = new FirebaseBook(map['selfLink'], map['addedDate'], map['readDate'], map['read'], map['rating']);
         book.firebaseId = firebaseId;
-        
+        // console.log(this)
         return book;
     }
 }

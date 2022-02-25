@@ -3,8 +3,9 @@ import HttpRequest from "../../services/HttpRequest";
 import BookFromGoogle from "../../models/BookFromGoogle";
 import Pagination from "../UI/Pagination";
 import Book from "../books/Book";
+import './SearchPage.css'
 
-const SearchPage = (props) => {
+const SearchPage = ({setHeight}) => {
     const [searchInput, setSearchInput] = useState('');
     const [searchedBooks, setSearchedBooks] = useState([]);
     const [searchPage, setSearchPage] = useState(1);
@@ -24,6 +25,9 @@ const SearchPage = (props) => {
       booksFromGoogle.push(new BookFromGoogle(book));
     };
     setSearchedBooks(prevState => [...booksFromGoogle]);
+    setSearchInput('')
+    setSearchPage(1)
+    setHeight(document.documentElement.clientHeight + 350);
 
 
   }
@@ -31,8 +35,8 @@ const SearchPage = (props) => {
 
 
     return (
-        <div>
-            <form onSubmit={(e) => onSubmitSearch(e)}>
+        <>
+            <form onSubmit={(e) => onSubmitSearch(e)} className='form-search'>
                 <input type="text" placeholder="Introduce libro o autor..." value={searchInput} onChange={(e) => onChangeSearchInput(e)}></input>
                 <button type='submit'>Buscar</button>
             </form>
@@ -40,7 +44,7 @@ const SearchPage = (props) => {
             <div className='contenedor-libros'>
                 {searchedBooks.slice((searchPage - 1) * 10, 10 * searchPage).map(book => <Book book={book}></Book>)}
             </div>
-        </div>
+        </>
     )
 }
 export default SearchPage

@@ -1,11 +1,11 @@
 import './Header.css'
 import Navigation from './Navigation'
 import Logo from './Logo';
-const Header = ({onSetPage: onClick}) => {
+const Header = ({onSetPage: onClick, page}) => {
     return (<header>
         <div>
             <Logo />
-            <Navigation onClick={onClick}/>
+            <Navigation onClick={onClick} page={page}/>
         </div>
     </header>
     )

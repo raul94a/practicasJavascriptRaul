@@ -1,0 +1,278 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway:400,700');
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;	
+	font-family: Raleway, sans-serif;
+}
+/* aplicamos el background. Es un gradiente lineal girado 90deg */
+body {
+	/* background: linear-gradient(90deg, #C7C5F4, #776BCC);		 */
+}
+/* Nuestro contenedor principal
+    Su hijo será la clase screen, y será centrada
+*/
+.login-screen{
+	position: absolute;
+	width:  100vw;
+	height: 100vh;
+	background: linear-gradient(90deg, #d6d5f8, #9f95e98a);
+	/* border-radius: 2%; */
+	box-shadow: 4px 7px 30px 8px #776BCC;
+	padding: 2rem;
+	overflow: hidden;
+}
+.container {
+	display: flex;
+	margin-top: 2.5rem;
+	/* align-items: center;
+	justify-content: center; */
+	min-height: 100vh;
+}
+/* Este card tiene algo sobre él... ahora veremos de qué se trata */
+.screen {	
+    /*
+        ¿Afecta este background a algo...?
+        En realidad se declaro en el body
+        pero este fondo se refiere al fondo de la tarjeta de login
+        si se quita nos e aprecia demasiado, pero queda mejor con este gradiente
+        en las zonas afectadas
+    */
+	background: linear-gradient(90deg, #5D54A4, #7C78B8);		
+	position: relative;	
+	height: 600px;
+	width: 360px;	
+    /* border-radius: 60px ; */
+    	/*La sombra del card de login  */
+	box-shadow: 4px -5px 24px #5C5696;
+    /* border: 2px solid red; */
+}
+/* El div que alberga el contenido del Card (form etc) */
+.screen__content {
+    /* border: 3px solid red; */
+    /* Si se descomenta la linea de arriba vemos que ocupa 
+       el mismo espacio que .screen
+     */
+	z-index: 1;
+    /* relativo al padre */
+	position: relative;	
+    /* Si cambiamos el porcentaje de height y descomentamos el border
+        vemos perfectamente como  cambia el tamaño de este contenedor
+    */
+	height: 100%;
+}
+/* Hermano de .screen-content e hijo de .screen */
+.screen__background {	
+    /* 
+        Tiene cuatro hijos, así que vamos a hacer que su posición
+        para ellos sea absoluta
+    */
+    /* border: 2px solid red; */
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 0;
+    /* A ver, a ver... ¿Pero esto qué hace? 
+    Bien. En primer lugar para que el funcionamiento de este clip-path
+    sea correcto, es completamente necesario, en este caso, declarar
+    el position absolute (va a afectar directamente a sus hijos)
+
+    En segundo lugar, hay que saber que clip-path lo que hace es ocultar
+    aquellas regiones de elementos HIJOS que sobre salgan del PADRE,
+    indicándole la forma de hacerlo...
+    En este caso se usa la funcion inset pasándole el valor 0 (la posición)
+    top, right, bottom, left (con un valor se refiere a los cuatro a la vez)
+    
+    En resumen, el padre se posiciona en  0 0 0 0 -> fuera de aquí los hijos 
+    se ocultan
+    */
+	-webkit-clip-path: inset(0);
+    /*inset(0 0 0 0);*/
+	clip-path: inset(0 0 0 0);	
+}
+/* Clase que comparten todos los hijos de .screen__background */
+.screen__background__shape {
+	transform: rotate(45deg);
+	position: absolute;
+}
+/* Para ver el funcionamiento de los screen background shape 1 - 4
+    recomiendo comentar el transform:rotate de arriba
+*/
+
+/* Esta forma es el cuadradito blacno del LOGIN
+    
+*/
+.screen__background__shape1 {
+    /* border:2px solid red; */
+	height: 520px;
+	width: 520px;
+	background: #FFF;	
+	top: -50px;
+	right: 120px;	
+	border-radius: 0 72px 0 0;
+}
+/* Esta forma está pegada  la derecha del card, parte superior */
+.screen__background__shape2 {
+    /* z-index: 45; */
+    /* border: 2px solid red; */
+	height: 220px;
+	width: 220px;
+	background: #6C63AC;
+    	/*Lo subimos un poquito para ocultar parte del cuadrado  */
+	top: -30%;
+	right: 0;	
+	border-radius: 32px;
+}
+/* la forma alargada transversal más oscura */
+.screen__background__shape3 {
+    /* border:2px solid red; */
+	height: 85vh;
+	width: 190px;
+	background: linear-gradient(270deg, #5D54A4, #6A679E);
+	top: -24px;
+	right: 0;	
+	border-radius: 32px;
+}
+
+.screen__background__shape4 {
+	height: 400px;
+	width: 200px;
+	background: #7E7BB9;	
+	top: 420px;
+	right: 50px;	
+	border-radius: 60px;
+}
+
+/* Hasta aquí se ha visto el truco del diseño del fondo del card de login
+    Voy a resumirlo lo más breve posible
+    1.Se establece el padre como absoluto y se posiciona en  0 0 0 0
+    2.El padre debe tener el clip-path con el inset en 0 para que la parte de los
+    hijos que sobrepasen las dimensiones del padre no se muestren
+
+    EN HIJOS
+
+    
+*/
+
+.login {
+	width: 320px;
+	padding: 30px;
+	padding-top: 156px;
+}
+
+.login__field {
+	padding: 20px 0px;	
+	position: relative;	
+}
+
+.login__icon {
+	position: absolute;
+	top: 30px;
+	color: #7875B5;
+}
+
+.login__input {
+	border: none;
+	border-bottom: 2px solid #D1D1D4;
+	background: none;
+	padding: 10px;
+	padding-left: 24px;
+	font-weight: 700;
+	width: 75%;
+	transition: .2s;
+}
+
+.login__input:active,
+.login__input:focus,
+.login__input:hover {
+	outline: none;
+	border-bottom-color: #6A679E;
+}
+
+.login__submit {
+	background: #fff;
+	font-size: 14px;
+	margin-top: 30px;
+	padding: 16px 20px;
+	border-radius: 26px;
+	border: 1px solid #D4D3E8;
+	text-transform: uppercase;
+	font-weight: 700;
+	display: flex;
+	align-items: center;
+	width: 100%;
+	color: #4C489D;
+	box-shadow: 0px 2px 2px #5C5696;
+	cursor: pointer;
+	transition: .2s;
+}
+
+.login__submit:active,
+.login__submit:focus,
+.login__submit:hover {
+	border-color: #6A679E;
+	outline: none;
+}
+
+.button__icon {
+	font-size: 24px;
+	margin-left: auto;
+	color: #7875B5;
+}
+
+.social-login {	
+	position: absolute;
+	height: 140px;
+	width: 160px;
+	text-align: center;
+	bottom: 0px;
+	right: 0px;
+	color: #fff;
+}
+
+.social-icons {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.social-login__icon {
+	padding: 20px 10px;
+	color: #fff;
+	text-decoration: none;	
+	text-shadow: 0px 0px 8px #7875B5;
+}
+
+.social-login__icon:hover {
+	transform: scale(1.5);	
+}
+
+.form-status-row{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+}
+
+.form-status-row .button-login-enabled{
+	border: none;
+	background: transparent;
+	color: black;
+	font-size: 1.3rem;
+	font-weight: bold;
+	transition: all 900ms cubic-bezier(0.075, 0.82, 0.165, 1);
+
+}
+
+.form-status-row .button-login-disabled{
+	border: none;
+	background: transparent;
+	color: rgba(0, 0, 0, 0.562);
+	font-size: 1rem;
+	font-weight: 300;
+	text-decoration: underline;
+	transition: all 750ms ease-in-out;
+
+}

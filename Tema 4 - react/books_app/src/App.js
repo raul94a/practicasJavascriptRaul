@@ -9,12 +9,21 @@ import { LoadingModal } from './components/modal/BookModal'
 import BookContext from './state/book-context';
 import SearchPage from './components/pages/SearchPage';
 import UserBooksPage from './components/pages/UserBooksPage';
+import Login from './components/login/Login';
+import Footer from './components/footer/Footer';
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [page, setPage] = useState(3)
+  const [localId, setLocalId] = useState('')
   const [isLoadingActive, setIsLoadingActive] = useState(true)
   //estado de los libros guardados por el usuario
   const [userBooks, setUserBooks] = useState([]);
+  const [height, setHeight] = useState(document.documentElement.clientHeight)
+
+  const onSetLocalId = localId =>{
+    setLocalId(localId);
+  }
 
   const addBook = (book, fromSearch = true) => {
 
@@ -26,51 +35,49 @@ function App() {
     console.log(userBooks, userBooks.length)
   }
 
-
+  const changeLogStatus = () => setIsLoggedIn(!isLoggedIn);
 
   const onSetPage = (ev) => {
     //data-nav
     let dataNav = ev.target.dataset.nav
     console.log('click', dataNav)
     setPage(dataNav)
+
     console.log(page)
   }
-
-  useEffect(async() => {
-    let response = await HttpRequest.httpGet(true)
-    let arrayBooks = [];
-    setTimeout(async () => {
-     
-      for (let book in response) {
-        let selfLink = response[book]['selfLink']
-        let firebaseBook = FirebaseBook.createBookFromFirebase(response[book]);
-        let googleBook = new BookFromGoogle(await HttpRequest.httpGetBook(selfLink));
-        googleBook.addFirebaseData(firebaseBook)
-        arrayBooks.push(googleBook)
-
-      }
-
-      setUserBooks([...arrayBooks])
-      setIsLoadingActive(false);
-
-
-    }, 2000)
-
-
-  }, [])
-
-
+  // let height = document.documentElement.offsetHeight;
+  // if(height === 0){
+    
+  // }
   return (
-    <BookContext.Provider value={{ userBooks: userBooks, addBook: addBook }}>
-      {isLoadingActive && <LoadingModal />}
-      <>
+    <BookContext.Provider value={{
+      userBooks: userBooks,
+      isLoadingActive: isLoadingActive,
+      isLoggedIn: isLoggedIn,
+      localId: localId,
+      setIsLoadingActive: setIsLoadingActive,
+      addBook: addBook,
+      setUserBooks: setUserBooks,
+      changeLogStatus: changeLogStatus,
+      setLocalId: onSetLocalId,
+      
+    }}>
 
-        <Header onSetPage={onSetPage} />
-        <div className='contenedor-principal'>
-          {page == 1 && <UserBooksPage showReadBooks={false} />}
-          {page == 2 && <UserBooksPage showReadBooks={true} />}
-          {page == 3 && <SearchPage />}
-        </div>
+        {isLoggedIn && isLoadingActive && <LoadingModal />}
+      <>
+        {!isLoggedIn && <Login />}
+
+
+        {isLoggedIn &&
+          <>
+            <Header onSetPage={onSetPage} page={page} />
+            <div className='contenedor-principal'>
+              {page == 1 && <UserBooksPage showReadBooks={false} setHeight={setHeight} />}
+              {page == 2 && <UserBooksPage showReadBooks={true} setHeight={setHeight}/>}
+              {page == 3 && <SearchPage setHeight={setHeight}/>}
+            </div>
+          </>}
+          {isLoggedIn && !isLoadingActive && <Footer height={height}/>}
       </>
     </BookContext.Provider>
   );

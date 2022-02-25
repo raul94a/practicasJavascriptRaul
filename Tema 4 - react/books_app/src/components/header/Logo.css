@@ -1,7 +1,7 @@
 .header-container-logo{
     min-width: 30%;
     width: 40%;
-    border: 1px solid orange;
+
 
 }
 
@@ -11,5 +11,6 @@
     width: 6rem;
     height: 6rem;
     padding: 1rem;
-    border: 1px solid red;
+    transform: scale(1.4);
+
 }

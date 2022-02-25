@@ -43,10 +43,10 @@ const OverlayModal = ({nota, notas, onSetNotas, onHideBackdrop}) => {
 
 const NotaModal = ({onHideBackdrop, nota, notas,notasFunctions}) => {
     const {onChangeTituloHandler, onChangeInputHandler, onChangeColor, setNotas} = notasFunctions
-    
+    let height = document.documentElement.clientHeight;
     return(<>
     
-    {ReactDOM.createPortal(<div className={'backdrop-active'} onClick={(e)=>onHideBackdrop(e)}></div>, document.getElementById('backdrop'))}
+    {ReactDOM.createPortal(<div style={{height:`${height + 150}px`}}className={'backdrop-active'} onClick={(e)=>onHideBackdrop(e)}></div>, document.getElementById('backdrop'))}
     {ReactDOM.createPortal(
     <OverlayModal  nota={nota} notas={notas} onSetNotas={setNotas} onHideBackdrop={(e)=>onHideBackdrop(e)}/>, document.getElementById('modal'))}
     </>)

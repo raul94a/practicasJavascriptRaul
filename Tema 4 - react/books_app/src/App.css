@@ -40,14 +40,20 @@
 .contenedor-libros,
 .contenedor-pendientes-render,
 .contenedor-leidos-render {
-    width: 98%;
-    margin: 0 auto;
-    margin-top: 2%;
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-gap: 1.3rem;
+  /* width: 98%; */
+  padding-top: 1rem;
+  margin-top: 2%;
+  display: grid;
+  grid-template-columns: repeat(5,210px);
+  grid-gap: 1.3rem;
+  margin: 0 auto;
+  place-content: center;
 
     /* position: absolute; */
+}
+
+.contenedor-libros{
+  width:  85%;
 }
 
 .active-backdrop{
