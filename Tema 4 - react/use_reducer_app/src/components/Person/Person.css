@@ -1,0 +1,24 @@
+
+
+.flex-row-between{
+    display:flex;
+    flex-direction: row;
+    justify-content:space-between;
+}
+
+.image-container{
+    width:200px;
+    height:200px;
+
+}
+.image-container img{
+    width:200px;
+    height:200px;
+    object-fit: fill;
+}
+
+.flex-column-evenly{
+    display:flex;
+    flex-direction: column;
+    justify-content:space-evenly;
+}

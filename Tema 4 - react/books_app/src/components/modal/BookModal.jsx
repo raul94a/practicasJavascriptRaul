@@ -15,7 +15,7 @@ const BackDrop = ({ onClick }) => {
         onClick(false)
     
     }
-    } style={{ height: height === 0 ? heightClient : height }}></div>, document.getElementById('backdrop'))}</>)
+    } style={{ height: `${height === 0 ? heightClient + 150 : height + 300}px` }}></div>, document.getElementById('backdrop'))}</>)
 }
 
 

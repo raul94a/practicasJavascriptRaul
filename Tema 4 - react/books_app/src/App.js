@@ -1,10 +1,7 @@
 
 import './App.css';
 import Header from './components/header/Header'
-import React, { useState, useEffect } from 'react';
-import HttpRequest from './services/HttpRequest'
-import BookFromGoogle from './models/BookFromGoogle';
-import FirebaseBook from './models/FirebaseBook';
+import React, { useState } from 'react';
 import { LoadingModal } from './components/modal/BookModal'
 import BookContext from './state/book-context';
 import SearchPage from './components/pages/SearchPage';
@@ -60,14 +57,12 @@ function App() {
       setUserBooks: setUserBooks,
       changeLogStatus: changeLogStatus,
       setLocalId: onSetLocalId,
-      
     }}>
 
         {isLoggedIn && isLoadingActive && <LoadingModal />}
       <>
         {!isLoggedIn && <Login />}
-
-
+        
         {isLoggedIn &&
           <>
             <Header onSetPage={onSetPage} page={page} />

@@ -256,17 +256,17 @@ body {
 	justify-content: space-evenly;
 }
 
-.form-status-row .button-login-enabled{
+.form-status-row .button-login-disabled{
 	border: none;
 	background: transparent;
-	color: black;
+	color: rgb(4, 2, 105);
 	font-size: 1.3rem;
 	font-weight: bold;
 	transition: all 900ms cubic-bezier(0.075, 0.82, 0.165, 1);
 
 }
 
-.form-status-row .button-login-disabled{
+.form-status-row .button-login-enabled{
 	border: none;
 	background: transparent;
 	color: rgba(0, 0, 0, 0.562);

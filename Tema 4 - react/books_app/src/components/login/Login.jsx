@@ -104,7 +104,7 @@ const Login = (props) => {
 
     const onSubmit = async (event) => {
         event.preventDefault();
-        let data = await auth(emailState, passState, 'registro');
+        let data = await auth(emailState, passState, formState);
         let localId = data['localId'];
 
         if (localId) {

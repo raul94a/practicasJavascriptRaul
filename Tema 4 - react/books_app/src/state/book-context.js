@@ -5,9 +5,20 @@ import React from "react";
 const BookContext = React.createContext({
     userBooks: [],
     localId: '',
-    setLocalId: ()=>{}
-    
-  
+    isLoadingActive: false,
+    isLoggedIn: false,
+    setLocalId: ()=>{},
+    setIsLoadingActive: ()=>{},
+    addBook:()=>{},
+    setUserBooks: ()=>{},
+    changeLogStatus: ()=>{},
 })
 
-export default BookContext
+
+const BookContextProvider = (props) => {
+    
+    return (<BookContext.Provider>{props.children}</BookContext.Provider>)
+}
+
+
+export default {BookContext, BookContextProvider}
